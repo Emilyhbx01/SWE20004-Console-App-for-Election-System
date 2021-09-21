@@ -1,9 +1,9 @@
 #pragma once
 
-void DisplayAddCandidateMenu();
-int PromptChoice();
-void ViewCandidate();
-void AddCandidate();
+void displayAddCandidateMenu();
+int promptChoice();
+void viewCandidate();
+void addCandidate();
 
 
 

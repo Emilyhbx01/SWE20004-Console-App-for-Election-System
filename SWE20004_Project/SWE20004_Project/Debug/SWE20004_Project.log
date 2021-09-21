@@ -1,2 +1,7 @@
-﻿  main.cpp
-  SWE20004_Project.vcxproj -> D:\Desktop\SWE20004_Project\Debug\SWE20004_Project.exe
+﻿  addcandidate.cpp
+  Candidate.cpp
+  main.cpp
+  People.cpp
+  Voter.cpp
+  Generating Code...
+  SWE20004_Project.vcxproj -> C:\Users\User\Desktop\SWE20004\SWE20004_Project\Debug\SWE20004_Project.exe

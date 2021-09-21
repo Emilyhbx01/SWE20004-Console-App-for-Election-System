@@ -11,9 +11,9 @@ protected:
 public:
 	People(string name_arg, int division_arg);
 
-	string GetName();
+	string getName();
 
-	int GetDivision();
+	int getDivision();
 
 
 };

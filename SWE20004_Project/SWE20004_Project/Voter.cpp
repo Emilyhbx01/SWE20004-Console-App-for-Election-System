@@ -7,19 +7,19 @@ Voter::Voter(string name_arg, int division_arg, string voterID_arg, int age_arg)
 	status = 'N';
 }
 
-string Voter::GetVoterID() {
+string Voter::getVoterID() {
 	return voterID;
 }
 
-int Voter::GetAge() {
+int Voter::getAge() {
 	return age;
 }
 
-char Voter::GetStatus(){
+char Voter::getStatus(){
 	return status;
 }
 
-void Voter::SetStatus(char status_arg) {
+void Voter::setStatus(char status_arg) {
 	status = status_arg;
 }
 

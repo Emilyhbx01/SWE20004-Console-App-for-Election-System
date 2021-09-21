@@ -3,8 +3,7 @@
 using namespace std;
 
 
-
-void DisplayAddCandidateMenu() {
+void displayAddCandidateMenu() {
 
 	cout << "1) Add Candidate\n";
 	cout << "2) View Candidate\n";
@@ -12,7 +11,7 @@ void DisplayAddCandidateMenu() {
 
 }
 
-int PromptChoice() {
+int promptChoice() {
 	int choice;
 	bool valid = false;
 	while (!valid) {
@@ -30,12 +29,12 @@ int PromptChoice() {
 	return choice;
 }
 
-void ViewCandidate() {
+void viewCandidate() {
 
 
 }
 
-void AddCandidate() {
+void addCandidate() {
 
 
 }

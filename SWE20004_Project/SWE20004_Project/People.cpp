@@ -6,11 +6,11 @@ People::People(string name_arg, int division_arg) {
 	division = division_arg;
 }
 
-string People::GetName() {
+string People::getName() {
 	return name;
 }
 
-int People::GetDivision() {
+int People::getDivision() {
 	return division;
 }
 

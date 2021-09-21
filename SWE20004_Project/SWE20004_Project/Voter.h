@@ -11,9 +11,9 @@ class Voter :public People {
 
 	public:
 		Voter(string name_arg, int division_arg, string voterID_arg, int age_arg);
-		string GetVoterID();
-		int GetAge();
-		char GetStatus();
-		void SetStatus(char status_arg);
+		string getVoterID();
+		int getAge();
+		char getStatus();
+		void setStatus(char status_arg);
 
 };

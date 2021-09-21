@@ -2,19 +2,19 @@
 #include "addcandidate.h"
 using namespace std;
 
-int MainMenu();
+int mainMenu();
 
 int main() {
-	int main_choice = MainMenu();
+	int main_choice = mainMenu();
 	if (main_choice == 1) {
-		DisplayAddCandidateMenu();
-		int add_choice = PromptChoice();
+		displayAddCandidateMenu();
+		int add_choice = promptChoice();
 		switch (add_choice) {
 			case 1:
-				AddCandidate();
+				addCandidate();
 				break;
 			case 2:
-				ViewCandidate();
+				viewCandidate();
 				break;
 			case 3:
 				return 0;
@@ -30,7 +30,7 @@ int main() {
 
 
 
-int MainMenu() {
+int mainMenu() {
 	int choice;
 	bool valid = false;
 	cout << "1) Add Candidate\n";

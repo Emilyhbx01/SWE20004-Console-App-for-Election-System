@@ -10,11 +10,11 @@ private:
 public:
 	Candidate(string name_arg, int division_arg, string candidateID_arg, string party_arg);
 
-	string GetCandidateID();
+	string getCandidateID();
 
-	string GetParty();
+	string getParty();
 
-	int GetCount();
+	int getCount();
 
-	void SetCount(int count_arg);
+	void setCount(int count_arg);
 };
