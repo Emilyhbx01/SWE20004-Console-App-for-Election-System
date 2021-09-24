@@ -21,27 +21,9 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="People.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Voter.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Candidate.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="People.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="addcandidate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Voter.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Candidate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

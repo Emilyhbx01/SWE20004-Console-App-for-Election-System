@@ -15,19 +15,19 @@ void displayAddCandidateMenu() {
 
 }
 
-int promptChoice() {
-	int choice;
+string promptChoice() {
+	string choice;
 	bool valid = false;
 	while (!valid) {
-		cout << "Enter your choice:\n";
-		cin >> choice;
-		if (choice > 0 && choice <= 3) {
+		cout << endl << "Enter your choice:\n";
+		getline(cin, choice);
+		if (choice == "1" || choice == "2" || choice == "3") {
 			valid = true;
 		}
 		else {
 			cout << "Invalid input\n";
 		}
-	
+
 	}
 
 	return choice;
@@ -38,12 +38,96 @@ void viewCandidate() {
 
 }
 
+string promptCandidateName() {
+	string name;
+	bool valid = false;
+
+	while (!valid) {
+
+		cout << endl << "Name of candidate:" << endl;
+		getline(cin, name);
+		for (unsigned int i = 0; i < name.length(); i++) {
+			char letter = name[i];
+			if (!isalpha(letter) && (!isspace(letter))) {
+				cout << "Invalid input" << endl;
+				valid = false;
+				break;
+			}
+			else if (isalpha(letter)) {
+				valid = true;
+			}
+		}
+
+	}
+
+	return name;
+}
+
+string promptCandidateParty() {
+	string party_no;
+	string party;
+	bool valid = false;
+
+	cout << endl << "Choose a party:" << endl;
+	cout << "1) National" << endl;
+	cout << "2) Pakatan" << endl;
+	cout << "3) Bersatu" << endl;
+
+
+	while (!valid) {
+
+		cout << endl << "Choose a party:" << endl;
+		getline(cin, party_no);
+		if (party_no == "1" || party_no == "2" || party_no == "3") {
+			valid = true;
+		}
+		else {
+			cout << "Invalid input" << endl;
+		}
+	}
+
+	switch (stoi(party_no)) {
+	case 1:
+		party = "National";
+		break;
+	case 2:
+		party = "Pakatan";
+		break;
+	case 3:
+		party = "Bersatu";
+		break;
+
+
+	}
+
+	return party;
+}
+
+string promptDivision() {
+	string division;
+	bool valid = false;
+	
+	while (!valid) {
+		cout << endl << "Division:" << endl;
+		getline(cin, division);
+		if (division == "1" || division == "2" || division == "3" || division == "4") {
+			valid = true;
+		}
+
+		else {
+			cout << "Please enter the correct division (1~4)." << endl;
+		}
+	}
+
+	return division;
+	
+}
 void addCandidate() {
 
-	// Name and Party are stored as variable character
-	char name[50], party[50]; //[50] is the array dimension
-	//Division and count stored as variable integer
-	int division, count;
+	
+	string name, party;
+	int division;
+	int count = 0;
 
 
 	//Menu Option [1] Description
@@ -53,36 +137,18 @@ void addCandidate() {
 	cout << "Candidate ID will be assigned at the end." << endl;
 	cout << endl;
 
-	//User Input Section
-	cout << "Name: ";
-	cin.getline(name, 50);
-	cout << "Party: ";
-	cin.getline(party, 50);
-	cout << "Division: ";
-	cin >> division;
+	name = promptCandidateName();
+	party = promptCandidateParty();
+	division = stoi(promptDivision());
 
-	if (division > 4) {
-		cout << "Please enter the correct division (1~4)." << endl;
-		cout << "Division: ";
-		cin >> division;
-	}
+	
 
-	//Count: Total number of votes
-	count = 0; //initial value
-
+	
 	//Assigned Candidate ID
-	//Extract and uppercase first 3 letters of party
-	string str(party); //Convert char to string for party field
-	string partyname = str.substr(0, 3); //Getting the first 3 letter of the party
-	transform(partyname.begin(), partyname.end(), partyname.begin(), ::toupper); //Uppercase the first 3 letters of the party name
+	string str(party); 
+	string partyname = str.substr(0, 3);
+	transform(partyname.begin(), partyname.end(), partyname.begin(), ::toupper);
 	const char* nameID = partyname.c_str();
 
-
-	//Program End Description
-	cout << endl;
-	cout << "Your -Assigned Candidate ID-: " << nameID << endl; //Assigned Candidate ID
-	cout << "You have finish registering yourself as a candidate for the election." << endl;
-	cout << "Good Luck in the Election!" << endl;
-	//Program ends
 }
 

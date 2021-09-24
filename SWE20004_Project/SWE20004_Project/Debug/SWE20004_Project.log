@@ -1,7 +1,5 @@
 ﻿  addcandidate.cpp
-  Candidate.cpp
   main.cpp
-  People.cpp
-  Voter.cpp
   Generating Code...
-  SWE20004_Project.vcxproj -> C:\Users\User\Desktop\SWE20004\SWE20004_Project\Debug\SWE20004_Project.exe
+  LINK : C:\Users\User\SWE20004\SWE20004_Project\Debug\SWE20004_Project.exe not found or not built by the last incremental link; performing full link
+  SWE20004_Project.vcxproj -> C:\Users\User\SWE20004\SWE20004_Project\Debug\SWE20004_Project.exe
