@@ -131,7 +131,7 @@ void addCandidate() {
 
 
 	//Menu Option [1] Description
-	cout << "Welcome!" << endl;
+	cout << endl << "Welcome!" << endl;
 	cout << "This section is for candidate registration." << endl;
 	cout << "Please fill each field correctly." << endl;
 	cout << "Candidate ID will be assigned at the end." << endl;
