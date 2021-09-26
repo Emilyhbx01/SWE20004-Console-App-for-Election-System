@@ -1,9 +1,6 @@
 #include <iostream>
-#include <string.h>
 #include <string>
-#include <algorithm>
-#include <math.h>
-#include <cstring>
+#include <fstream>
 using namespace std;
 
 
@@ -33,10 +30,7 @@ string promptChoice() {
 	return choice;
 }
 
-void viewCandidate() {
 
-
-}
 
 string promptCandidateName() {
 	string name;
@@ -69,9 +63,9 @@ string promptCandidateParty() {
 	bool valid = false;
 
 	cout << endl << "Choose a party:" << endl;
-	cout << "1) National" << endl;
-	cout << "2) Pakatan" << endl;
-	cout << "3) Bersatu" << endl;
+	cout << "1) NATIONAL" << endl;
+	cout << "2) PAKATAN" << endl;
+	cout << "3) BERSATU" << endl;
 
 
 	while (!valid) {
@@ -88,13 +82,13 @@ string promptCandidateParty() {
 
 	switch (stoi(party_no)) {
 	case 1:
-		party = "National";
+		party = "NATIONAL";
 		break;
 	case 2:
-		party = "Pakatan";
+		party = "PAKATAN";
 		break;
 	case 3:
-		party = "Bersatu";
+		party = "BERSATU";
 		break;
 
 
@@ -122,12 +116,52 @@ string promptDivision() {
 	return division;
 	
 }
+
+void inputToFile(string candidateID, string name, string party, int division) {
+
+	string outputFilename = "candidate.txt";
+	string candidateDetails = "{CandidateID:" + candidateID + ",\nName:" + name + ",\nParty:" + party + ",\nDivision:" + to_string(division) + "}\n";
+	ofstream outputStream;
+	outputStream.open(outputFilename, ofstream::app);
+
+
+	if (outputStream.is_open()) {
+		outputStream << candidateDetails << endl;
+	}
+	else {
+		cerr << "File cannot be opened" << endl;
+	}
+
+	outputStream.close();
+}
+
+int generateCandidateIdNo() {
+	string inputFilename = "candidate.txt";
+	ifstream inputStream;
+	int no = 10;
+	inputStream.open(inputFilename, ifstream::in);
+
+	if (inputStream.is_open()) {
+		string str;
+		while (getline(inputStream,str)) {
+			int startPosition = str.find("CandidateID");
+			if (startPosition != -1) {
+				no += 1;
+			}
+
+		
+		}
+	}
+	return no;
+}
+
 void addCandidate() {
 
 	
-	string name, party;
-	int division;
+	string name, party, candidateID;
+	int division, candidateIdNo;
 	int count = 0;
+
 
 
 	//Menu Option [1] Description
@@ -140,15 +174,17 @@ void addCandidate() {
 	name = promptCandidateName();
 	party = promptCandidateParty();
 	division = stoi(promptDivision());
+	candidateIdNo = generateCandidateIdNo();
+	candidateID = party.substr(0, 3) + to_string(candidateIdNo);
 
+	inputToFile(candidateID,name,party,division);
 	
 
-	
-	//Assigned Candidate ID
-	string str(party); 
-	string partyname = str.substr(0, 3);
-	transform(partyname.begin(), partyname.end(), partyname.begin(), ::toupper);
-	const char* nameID = partyname.c_str();
+}
+
+
+void viewCandidate() {
+
 
 }
 
