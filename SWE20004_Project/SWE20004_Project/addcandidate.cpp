@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <fstream>
+#include <set>
 using namespace std;
 
 
@@ -180,6 +181,28 @@ void addCandidate() {
 
 	inputToFile(candidateID,name,party,division,count);
 	
+    set<string> names; 
+    string name; 
+    unsigned int nameCounter = 0; 
+    
+    while (nameCounter < 12) {
+        cout << "Enter " << nameCounter + 1 << " name" << endl;
+        getline(cin, name);        
+        
+        if (!names.insert(name).second) {
+            cout << "Candidate's name already exist!" << endl;
+        }
+        else {
+            nameCounter++;
+        }
+    }
+
+    
+    for (auto listName : names) {
+        cout << listName << " ";
+    }
+    cout << endl;
+    return 0;
 
 }
 
@@ -188,4 +211,5 @@ void viewCandidate() {
 
 
 }
+
 
