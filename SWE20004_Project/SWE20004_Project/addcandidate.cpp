@@ -190,7 +190,8 @@ void addCandidate() {
         getline(cin, name);        
         
         if (!names.insert(name).second) {
-            cout << "Candidate's name already exist!" << endl;
+            cout << "Candidate's name already exist" << endl;
+	    cout << "Candidate's name is unique" << endl;
         }
         else {
             nameCounter++;
