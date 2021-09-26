@@ -1,12 +1,7 @@
 
-
-{CandidateID:BER10,
+{CandidateID:NAT10,
 Name:emily hong ,
-Party:BERSATU,
-Division:2}
-
-{CandidateID:PAK11,
-Name:kelly jee,
-Party:PAKATAN,
-Division:4}
+Party:NATIONAL,
+Division:1,
+Count:0}
 

@@ -117,10 +117,10 @@ string promptDivision() {
 	
 }
 
-void inputToFile(string candidateID, string name, string party, int division) {
+void inputToFile(string candidateID, string name, string party, int division, int count) {
 
 	string outputFilename = "candidate.txt";
-	string candidateDetails = "{CandidateID:" + candidateID + ",\nName:" + name + ",\nParty:" + party + ",\nDivision:" + to_string(division) + "}\n";
+	string candidateDetails = "{CandidateID:" + candidateID + ",\nName:" + name + ",\nParty:" + party + ",\nDivision:" + to_string(division) + ",\nCount:" + to_string(count) + "}\n";
 	ofstream outputStream;
 	outputStream.open(outputFilename, ofstream::app);
 
@@ -136,6 +136,7 @@ void inputToFile(string candidateID, string name, string party, int division) {
 }
 
 int generateCandidateIdNo() {
+	//read the candidate file to determine the last id no used
 	string inputFilename = "candidate.txt";
 	ifstream inputStream;
 	int no = 10;
@@ -177,7 +178,7 @@ void addCandidate() {
 	candidateIdNo = generateCandidateIdNo();
 	candidateID = party.substr(0, 3) + to_string(candidateIdNo);
 
-	inputToFile(candidateID,name,party,division);
+	inputToFile(candidateID,name,party,division,count);
 	
 
 }

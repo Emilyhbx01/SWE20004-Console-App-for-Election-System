@@ -4,7 +4,7 @@ using namespace std;
 
 
 void displayAddCandidateMenu();
-void inputToFile(string candidateID, string name, string party, int division);
+void inputToFile(string candidateID, string name, string party, int division, int count);
 int generateCandidateIdNo();
 void viewCandidate();
 void addCandidate();
