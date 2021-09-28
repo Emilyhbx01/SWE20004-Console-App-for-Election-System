@@ -59,41 +59,24 @@ string promptCandidateName() {
 }
 
 string promptCandidateParty() {
-	string party_no;
 	string party;
 	bool valid = false;
-
-	cout << endl << "Choose a party:" << endl;
-	cout << "1) NATIONAL" << endl;
-	cout << "2) PAKATAN" << endl;
-	cout << "3) BERSATU" << endl;
-
-
 	while (!valid) {
-
-		cout << endl << "Choose a party:" << endl;
-		getline(cin, party_no);
-		if (party_no == "1" || party_no == "2" || party_no == "3") {
-			valid = true;
-		}
-		else {
-			cout << "Invalid input" << endl;
+		cout << endl << "Party Name:" << endl;
+		getline(cin, party);
+		for (unsigned int i = 0; i < party.length(); i++) {
+			char letter = party[i];
+			if (!isalpha(letter) && (!isspace(letter))) {
+				cout << "Invalid input" << endl;
+				valid = false;
+				break;
+			}
+			else if (isalpha(letter)) {
+				valid = true;
+			}
 		}
 	}
-
-	switch (stoi(party_no)) {
-	case 1:
-		party = "NATIONAL";
-		break;
-	case 2:
-		party = "PAKATAN";
-		break;
-	case 3:
-		party = "BERSATU";
-		break;
-
-
-	}
+	
 
 	return party;
 }
@@ -121,7 +104,7 @@ string promptDivision() {
 void inputToFile(string candidateID, string name, string party, int division, int count) {
 
 	string outputFilename = "candidate.txt";
-	string candidateDetails = "{CandidateID:" + candidateID + ",\nName:" + name + ",\nParty:" + party + ",\nDivision:" + to_string(division) + ",\nCount:" + to_string(count) + "}\n";
+	string candidateDetails = "CandidateID:" + candidateID + ",Name:" + name + ",Party:" + party + ",Division:" + to_string(division) + ",Count:" + to_string(count) + "\n";
 	ofstream outputStream;
 	outputStream.open(outputFilename, ofstream::app);
 
@@ -164,8 +147,6 @@ void addCandidate() {
 	int division, candidateIdNo;
 	int count = 0;
 
-
-
 	//Menu Option [1] Description
 	cout << endl << "Welcome!" << endl;
 	cout << "This section is for candidate registration." << endl;
@@ -180,30 +161,6 @@ void addCandidate() {
 	candidateID = party.substr(0, 3) + to_string(candidateIdNo);
 
 	inputToFile(candidateID,name,party,division,count);
-	
-    set<string> names; 
-    string name; 
-    unsigned int nameCounter = 0; 
-    
-    while (nameCounter < 12) {
-        cout << "Enter " << nameCounter + 1 << " name" << endl;
-        getline(cin, name);        
-        
-        if (!names.insert(name).second) {
-            cout << "Candidate's name already exist" << endl;
-	    cout << "Candidate's name is unique" << endl;
-        }
-        else {
-            nameCounter++;
-        }
-    }
-
-    
-    for (auto listName : names) {
-        cout << listName << " ";
-    }
-    cout << endl;
-    return 0;
 
 }
 

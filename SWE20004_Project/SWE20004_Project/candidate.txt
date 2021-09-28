@@ -1,7 +1,0 @@
-
-{CandidateID:NAT10,
-Name:emily hong ,
-Party:NATIONAL,
-Division:1,
-Count:0}
-
