@@ -184,6 +184,20 @@ void addCandidate() {
 	cout << "Please fill each field correctly." << endl;
 	cout << "Candidate ID will be assigned at the end." << endl;
 	cout << endl;
+	
+	// take input from user
+        string candidateID, name, party;
+        int division, count;
+        cout << "Enter Candidate ID: ";
+        cin >> candidateID;
+        cout << "Enter Candidate Name: ";
+        cin >> name;
+        cout << "Enter Candidate Party: ";
+        cin >> party;
+        cout << "Enter Division ( 1-4 ): ";
+        cin >> division;
+        cout << "Enter Count: ";
+        cin >> count;
 
 	name = promptCandidateName();
 	party = promptCandidateParty();
