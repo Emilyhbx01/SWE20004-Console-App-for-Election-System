@@ -8,6 +8,7 @@ void inputToFile(string& candidateID, string& name, string& party, int& division
 int generateCandidateIdNo();
 void viewCandidate();
 void addCandidate();
+void searchCandidate();
 
 string promptChoice();
 string promptCandidateParty();

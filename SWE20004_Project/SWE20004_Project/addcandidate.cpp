@@ -1,7 +1,8 @@
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <set>
+#include <vector>
+#include<algorithm>
 using namespace std;
 
 
@@ -9,7 +10,8 @@ void displayAddCandidateMenu() {
 
 	cout << "1) Add Candidate\n";
 	cout << "2) View Candidate\n";
-	cout << "3) Quit\n";
+	cout << "3) Search Candidate\n";
+	cout << "4) Quit\n";
 
 }
 
@@ -19,7 +21,7 @@ string promptChoice() {
 	while (!valid) {
 		cout << endl << "Enter your choice:\n";
 		getline(cin, choice);
-		if (choice == "1" || choice == "2" || choice == "3") {
+		if (choice == "1" || choice == "2" || choice == "3" || choice == "4") {
 			valid = true;
 		}
 		else {
@@ -104,7 +106,7 @@ string promptDivision() {
 void inputToFile(string& candidateID, string& name, string& party, int& division, int& count) {
 
 	string outputFilename = "candidate.txt";
-	string candidateDetails = "CandidateID:" + candidateID + ",Name:" + name + ",Party:" + party + ",Division:" + to_string(division) + ",Count:" + to_string(count) + "\n";
+	string candidateDetails = candidateID + "," + name + "," + party + "," + to_string(division) + "," + to_string(count);
 	ofstream outputStream;
 	outputStream.open(outputFilename, ofstream::app);
 
@@ -126,25 +128,20 @@ int generateCandidateIdNo() {
 	
 	string inputFilename = "candidate.txt";
 	ifstream inputStream;
-	int no = 1;
+	int noOfLines = 0;
+	int newCandidateNo;
 	inputStream.open(inputFilename, ifstream::in);
 
 	if (inputStream.is_open()) {
 		string str;
 		while (getline(inputStream,str)) {
-			int startPosition = str.find("CandidateID");
-			if (startPosition != -1) {
-				no += 1;
-			}
-
-		
+				noOfLines += 1;
 		}
 	}
 
-	if (to_string(no).length() == 1) {
-		no = stoi("0") + no;
-	}
-	return no;
+	inputStream.close();
+	newCandidateNo = noOfLines + 1;
+	return newCandidateNo;
 }
 
 
@@ -204,6 +201,62 @@ void addCandidate() {
 
 
 
+void searchCandidate() {
+	
+	string searchName,fileLine;
+	bool found = false;
+	vector<string> candidateDetails;
+	ifstream inputStream;
+
+	cout << "Name of candidate:" << endl;
+	getline(cin, searchName);
+	transform(searchName.begin(), searchName.end(), searchName.begin(),::tolower);
+
+	inputStream.open("candidate.txt",ifstream::in);
+	if (inputStream.is_open()) {
+		
+		while (getline(inputStream,fileLine) && !found) {
+			candidateDetails.clear();
+			char fileLineArray[200];
+			strcpy_s(fileLineArray, fileLine.c_str());
+			
+
+			//split line by comma and add each candidate details to vector
+			char* remain = fileLineArray;
+			char* token;
+			while ((token = strtok_s(remain, ",", &remain)) && !found) {
+				candidateDetails.push_back(token);
+				for (string detail : candidateDetails) {
+					transform(detail.begin(), detail.end(), detail.begin(), ::tolower);
+					if (detail == searchName && candidateDetails.size() == 5) {
+						found = true;
+						break;
+					}
+				}
+			}	
+		}
+	}
+	else {
+		cerr << "File cannot be opened" << endl;
+	}
+
+	inputStream.close();
+
+
+	//print candidate details if found 
+	if (found) {
+		cout << endl << "CandidateID:" << candidateDetails[0] << endl;
+		cout << "Name:" << candidateDetails[1] << endl;
+		cout << "Party:" << candidateDetails[2] << endl;
+		cout << "Division:" << candidateDetails[3] << endl;
+		cout << "Count:" << candidateDetails[4] << endl << endl;
+	}
+	else {
+		cout << "Candidate does not exist" << endl << endl;
+	}
+
+
+}
 void viewCandidate() {
 
 

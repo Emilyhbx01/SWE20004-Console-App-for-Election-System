@@ -16,17 +16,18 @@ int main() {
 			viewCandidate();
 		}
 		else if (add_choice == "3") {
-			return 1;
+			searchCandidate();
 
+		}
+		else if(add_choice == "4"){
+			run = false;
+			return 1;
 		}
 	
 	}
 	
 
 	
-
-
-
 
 	return 0;
 }
