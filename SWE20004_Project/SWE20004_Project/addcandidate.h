@@ -1,3 +1,12 @@
+/*
+Name: Bhagya Priyadarshani Kumari Wijesuriya (101216659)
+	  Emily Hong Boon Xuan (101220757)
+	  Kelly Jee Li Zhen (102761529)
+	  Vernon Chai Chyn Yeong (101223031)
+Date:
+Program Description: This program is to add candidate into a database. This part is the header file where the functions are 
+					 contained to be used in the main function.
+*/
 #pragma once
 #include <iostream>
 using namespace std;

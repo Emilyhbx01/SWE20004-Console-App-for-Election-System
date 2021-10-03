@@ -1,3 +1,13 @@
+/*
+Name: Bhagya Priyadarshani Kumari Wijesuriya (101216659)
+      Emily Hong Boon Xuan (101220757)
+	  Kelly Jee Li Zhen (102761529)
+	  Vernon Chai Chyn Yeong (101223031)
+Date:
+Program Description: This program is to add candidate into a database. This part shows all the functions used to produced the menu options
+                     to add, view and search candidates as well as to exit the program.
+*/
+
 #include <iostream>
 #include <string>
 #include <fstream>
@@ -5,7 +15,7 @@
 #include<algorithm>
 using namespace std;
 
-
+//This function is to display the menu options for the user to choose
 void displayAddCandidateMenu() {
 
 	cout << "1) Add Candidate\n";
@@ -15,6 +25,7 @@ void displayAddCandidateMenu() {
 
 }
 
+//This function prompt choices for the user to input their desired choice for the menu option
 string promptChoice() {
 	string choice;
 	bool valid = false;
@@ -34,7 +45,7 @@ string promptChoice() {
 }
 
 
-
+//This function is for the user to add their name as a candidate in the form of string
 string promptCandidateName() {
 	string name;
 	bool valid = false;
@@ -60,6 +71,7 @@ string promptCandidateName() {
 	return name;
 }
 
+//This function is for the user to input their candidate party name in the form of string
 string promptCandidateParty() {
 	string party;
 	bool valid = false;
@@ -83,6 +95,7 @@ string promptCandidateParty() {
 	return party;
 }
 
+//This function is for the user to input their division in the form of string
 string promptDivision() {
 	string division;
 	bool valid = false;
@@ -103,6 +116,7 @@ string promptDivision() {
 	
 }
 
+//This function is to convert the candidates information into .txt file storing into database
 void inputToFile(string& candidateID, string& name, string& party, int& division, int& count) {
 
 	string outputFilename = "candidate.txt";
@@ -122,8 +136,8 @@ void inputToFile(string& candidateID, string& name, string& party, int& division
 }
 
 
-//function to generate the random 2 digit behind candidate ID
-//read the candidate file to determine the next ID
+//Function to generate the random 2 digit behind candidate ID
+//Read the candidate file to determine the next ID
 int generateCandidateIdNo() {
 	
 	string inputFilename = "candidate.txt";
@@ -145,7 +159,7 @@ int generateCandidateIdNo() {
 }
 
 
-//to generate the full candidate ID
+//To generate the full candidate ID
 string generateCandidateID(int& candidateIdNo, string& party ) {
 	string candidateID;
 	if (to_string(candidateIdNo).length() == 1) {
@@ -200,7 +214,7 @@ void addCandidate() {
 }
 
 
-
+//This function search for a candidate by inputting the full name of the canidate
 void searchCandidate() {
 	
 	string searchName,fileLine;
@@ -221,7 +235,7 @@ void searchCandidate() {
 			strcpy_s(fileLineArray, fileLine.c_str());
 			
 
-			//split line by comma and add each candidate details to vector
+			//Split line by comma and add each candidate details to vector
 			char* remain = fileLineArray;
 			char* token;
 			while ((token = strtok_s(remain, ",", &remain)) && !found) {
@@ -243,7 +257,7 @@ void searchCandidate() {
 	inputStream.close();
 
 
-	//print candidate details if found 
+	//Print candidate details if found 
 	if (found) {
 		cout << endl << "CandidateID:" << candidateDetails[0] << endl;
 		cout << "Name:" << candidateDetails[1] << endl;
