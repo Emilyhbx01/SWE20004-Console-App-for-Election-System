@@ -310,6 +310,55 @@ void searchCandidate() {
 
 }
 void viewCandidate() {
+	
+ string line 
+ ifstream inputStream; ("candidate.txt");
+ while (!candidate.eof())
+
+getline(inputSteam, line);
+
+// variables to store values
+string candidateID, name, party;
+int division, count;
+
+// slpit line and store each value in their respective variable
+stringstream ss(line);
+string substr;
+getline(ss, substr, ',');
+candidateID = substr;
+getline(ss, substr, ',');
+name = substr;
+getline(ss, substr, ',');
+party = substr;
+getline(ss, substr, ',');
+division = stoi(substr);
+getline(ss, substr, ',');
+count = stoi(substr);
+
+//View Option [2] Description
+if (choice == 2)
+{
+	cout << endl << "Welcome!" << endl;
+	cout << "This section is for view candidates" << endl;
+	cout << "Candidates Detailes will assigned at the end." << endl;
+	cout << endl;
+
+	cout << candidateID << " " << name << " " << party << " " << division << " " << count << endl;
+}
+
+else if (choice == 4)
+{
+cout << "Thank you for your contribution" << endl;
+}
+else
+{
+cout << "Invalid Input. Please enter correct option." << endl << endl;
+
+// close file
+inputStream.close();
+cout << endl << endl;
+
+return 0;
 
 
 }
