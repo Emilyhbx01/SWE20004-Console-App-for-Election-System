@@ -24,6 +24,6 @@ string promptCandidateParty();
 string promptCandidateName();
 string promptDivision();
 string generateCandidateID(int& candidateIdNo, string& party);
-bool validateCandidateName(string& name);
+bool validateCandidateName(string name);
 
 

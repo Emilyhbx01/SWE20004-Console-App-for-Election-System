@@ -44,6 +44,53 @@ string promptChoice() {
 	return choice;
 }
 
+//To check if the candidate already exists
+bool validateCandidateName(string name) {
+
+	ifstream myFile;
+	string line;
+	vector<string> candidateDetails;
+	bool nameExists = false;
+	transform(name.begin(), name.end(), name.begin(), ::tolower);
+	myFile.open("candidate.txt");
+
+	if (myFile.fail()) {
+		cout << "Error: Unable to open candidate.txt.";
+		exit(1);
+	}
+
+	while (getline(myFile, line)) {
+		char fileLine[200];
+		strcpy_s(fileLine, line.c_str());
+		char* remain = fileLine;
+		char* token;
+
+		while ((token = strtok_s(remain, ",", &remain)) && !nameExists) {
+			candidateDetails.push_back(token);
+
+			for (string detail : candidateDetails) {
+				transform(detail.begin(), detail.end(), detail.begin(), ::tolower);
+				if (detail == name) {
+					nameExists = true;
+					break;
+				}
+			}
+		}
+
+		candidateDetails.clear();
+	}
+
+	myFile.close();
+
+	// Returns a value based on whether the name exists
+	if (nameExists == true) {
+		cout << "Candidate name already exists." << endl;
+		return false;
+	}
+	else {
+		return true;
+	}
+}
 
 //This function is for the user to add their name as a candidate in the form of string
 string promptCandidateName() {
@@ -62,7 +109,9 @@ string promptCandidateName() {
 				break;
 			}
 			else if (isalpha(letter)) {
-				valid = true;
+
+				valid = validateCandidateName(name);
+				break;
 			}
 		}
 
@@ -174,11 +223,6 @@ string generateCandidateID(int& candidateIdNo, string& party ) {
 
 
 
-bool validateCandidateName(string& name) {
-
-	return true;
-}
-
 
 
 void addCandidate() {
@@ -201,20 +245,14 @@ void addCandidate() {
 	division = stoi(promptDivision());
 	candidateIdNo = generateCandidateIdNo();
 	candidateID = generateCandidateID(candidateIdNo,party);
-	validCandidateName = validateCandidateName(name);
-
-	if (validateCandidateName(name)) {
-		inputToFile(candidateID, name, party, division, count);
-	}
-	else {
-		cout << "Candidate name already exists." << endl;
-	}
+	inputToFile(candidateID, name, party, division, count);
+	
 
 	
 }
 
 
-//This function search for a candidate by inputting the full name of the canidate
+//This function search for a candidate by inputing the full name of the candidate
 void searchCandidate() {
 	
 	string searchName,fileLine;
