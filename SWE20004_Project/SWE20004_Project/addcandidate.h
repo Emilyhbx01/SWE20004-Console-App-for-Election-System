@@ -9,6 +9,7 @@ Program Description: This program is to add candidate into a database. This part
 */
 #pragma once
 #include <iostream>
+#include <vector>
 using namespace std;
 
 
@@ -25,5 +26,7 @@ string promptCandidateName();
 string promptDivision();
 string generateCandidateID(int& candidateIdNo, string& party);
 bool validateCandidateName(string name);
+vector<string> readCandidateFile();
+void printCandidateDetails(string& candidateID, string& name, string& party, string& division, string& count);
 
 

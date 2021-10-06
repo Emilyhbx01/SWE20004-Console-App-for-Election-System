@@ -8,10 +8,10 @@ Program Description: This program is to add candidate into a database. This part
                      to add, view and search candidates as well as to exit the program.
 */
 
+#include "addcandidate.h"
 #include <iostream>
 #include <string>
 #include <fstream>
-#include <vector>
 #include<algorithm>
 using namespace std;
 
@@ -44,43 +44,50 @@ string promptChoice() {
 	return choice;
 }
 
+//This function is to retrieve candidate details from text file
+vector<string> readCandidateFile() {
+	ifstream inputStream;
+	string fileLine = "";
+	vector<string> candidateDetails;
+	inputStream.open("candidate.txt", ifstream::in);
+	while (getline(inputStream, fileLine)) {
+		char fileLineArray[200];
+		strcpy_s(fileLineArray, fileLine.c_str());
+
+		//Split line by comma
+		char* remain = fileLineArray;
+		char* token;
+		while (token = strtok_s(remain, ",", &remain)) {
+			candidateDetails.push_back(token);
+		}
+	}
+	inputStream.close();
+	return candidateDetails;
+}
+
+void printCandidateDetails(string& candidateID, string& name, string& party, string& division, string& count) {
+	cout << endl << "CandidateID:" << candidateID << endl;
+	cout << "Name:" << name << endl;
+	cout << "Party:" << party << endl;
+	cout << "Division:" << division << endl;
+	cout << "Count:" << count << endl << endl;
+}
+
 //To check if the candidate already exists
 bool validateCandidateName(string name) {
 
-	ifstream myFile;
-	string line;
-	vector<string> candidateDetails;
+	vector<string> candidateDetails = readCandidateFile();
 	bool nameExists = false;
 	transform(name.begin(), name.end(), name.begin(), ::tolower);
-	myFile.open("candidate.txt");
-
-	if (myFile.fail()) {
-		cout << "Error: Unable to open candidate.txt.";
-		exit(1);
-	}
-
-	while (getline(myFile, line)) {
-		char fileLine[200];
-		strcpy_s(fileLine, line.c_str());
-		char* remain = fileLine;
-		char* token;
-
-		while ((token = strtok_s(remain, ",", &remain)) && !nameExists) {
-			candidateDetails.push_back(token);
-
-			for (string detail : candidateDetails) {
-				transform(detail.begin(), detail.end(), detail.begin(), ::tolower);
-				if (detail == name) {
-					nameExists = true;
-					break;
-				}
-			}
+	
+	for (int i = 1; i < candidateDetails.size(); i += 5) {
+		string detail = candidateDetails[i];
+		transform(detail.begin(), detail.end(), detail.begin(), ::tolower);
+		if (detail == name) {
+			nameExists = true;
+			break;
 		}
-
-		candidateDetails.clear();
 	}
-
-	myFile.close();
 
 	// Returns a value based on whether the name exists
 	if (nameExists == true) {
@@ -254,60 +261,38 @@ void addCandidate() {
 //This function search for a candidate by inputing the full name of the candidate
 void searchCandidate() {
 	
-	string searchName,fileLine;
+	string searchName;
 	bool found = false;
-	vector<string> candidateDetails;
-	ifstream inputStream;
+	vector<string> candidateDetails = readCandidateFile();
 
 	cout << "Name of candidate:" << endl;
 	getline(cin, searchName);
 	transform(searchName.begin(), searchName.end(), searchName.begin(),::tolower);
 
-	inputStream.open("candidate.txt",ifstream::in);
-	if (inputStream.is_open()) {
-		
-		while (getline(inputStream,fileLine) && !found) {
-			candidateDetails.clear();
-			char fileLineArray[200];
-			strcpy_s(fileLineArray, fileLine.c_str());
-			
-
-			//Split line by comma and add each candidate details to vector
-			char* remain = fileLineArray;
-			char* token;
-			while ((token = strtok_s(remain, ",", &remain)) && !found) {
-				candidateDetails.push_back(token);
-				for (string detail : candidateDetails) {
-					transform(detail.begin(), detail.end(), detail.begin(), ::tolower);
-					if (detail == searchName && candidateDetails.size() == 5) {
-						found = true;
-						break;
-					}
-				}
-			}	
+	for (int i = 0; i < candidateDetails.size(); i += 5) {
+		int nameIndex = i + 1;
+		string name = candidateDetails[nameIndex];
+		transform(name.begin(), name.end(), name.begin(), ::tolower);
+		if (name == searchName) {
+			int partyIndex = i + 2;
+			int divisionIndex = i + 3;
+			int countIndex = i + 4;
+			printCandidateDetails(candidateDetails[i], candidateDetails[nameIndex], candidateDetails[partyIndex], candidateDetails[divisionIndex], candidateDetails[countIndex]);
+			found = true;
+			break;
 		}
-	}
-	else {
-		cerr << "File cannot be opened" << endl;
-	}
 
-	inputStream.close();
-
-
-	//Print candidate details if found 
-	if (found) {
-		cout << endl << "CandidateID:" << candidateDetails[0] << endl;
-		cout << "Name:" << candidateDetails[1] << endl;
-		cout << "Party:" << candidateDetails[2] << endl;
-		cout << "Division:" << candidateDetails[3] << endl;
-		cout << "Count:" << candidateDetails[4] << endl << endl;
 	}
-	else {
+	
+	if (!found) {
 		cout << "Candidate does not exist" << endl << endl;
 	}
 
 
 }
+
+
+
 
 void viewCandidate() {
 
@@ -315,50 +300,18 @@ void viewCandidate() {
 	cout << endl << "Welcome!" << endl;
 	cout << "This section is to view all candidates" << endl;
 	cout << endl;
+	vector<string> candidateDetails = readCandidateFile();
 
-	ifstream inputStream;
-	string fileLine = "";
-	vector<string> candidateDetails;
-	inputStream.open("candidate.txt", ifstream::in);
-	while (getline(inputStream, fileLine, ',')) {
-		char fileLineArray[200];
-		strcpy_s(fileLineArray, fileLine.c_str());
+	for (int i = 0; i < candidateDetails.size(); i += 5) {
+		int nameIndex = i + 1;
+		int partyIndex = i + 2;
+		int divisionIndex = i + 3;
+		int countIndex = i + 4;
 
-		//Split line by comma
-		char* remain = fileLineArray;
-		char* token;
-		while (token = strtok_s(remain, ",", &remain)) {
-			candidateDetails.push_back(token);
-			for (string detail : candidateDetails) {
-				transform(detail.begin(), detail.end(), detail.begin(), ::tolower);
-				break;
-			}
-		}
-
+		printCandidateDetails(candidateDetails[i], candidateDetails[nameIndex], candidateDetails[partyIndex], candidateDetails[divisionIndex], candidateDetails[countIndex]);
 	}
 
-	inputStream.close();
-
-	//Print candidates detail
-	for (int i = 0; i < 5; i = i + 10) {
-		cout << endl << "CandidateID:" << candidateDetails[i] << endl;
-		cout << "Name:" << candidateDetails[i+1] << endl;
-		cout << "Party:" << candidateDetails[i+2] << endl;
-		cout << "Division:" << candidateDetails[i+3] << endl;
-		cout << "Count:" << candidateDetails[i+4] << endl;
-		cout << endl;
-	break;
-	}
-
-	for (int i = 5; i < 10; i = i + 10) {
-		cout << endl << "CandidateID:" << candidateDetails[i] << endl;
-		cout << "Name:" << candidateDetails[i + 1] << endl;
-		cout << "Party:" << candidateDetails[i + 2] << endl;
-		cout << "Division:" << candidateDetails[i + 3] << endl;
-		cout << "Count:" << candidateDetails[i + 4] << endl;
-		cout << endl;
-		break;
-	}
+	
 }
 
 
