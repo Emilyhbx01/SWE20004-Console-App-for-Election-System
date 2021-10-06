@@ -1,5 +1,5 @@
 ﻿  addcandidate.cpp
-C:\Users\User\Desktop\SWE20004\SWE20004_Project\SWE20004_Project\addcandidate.cpp(241,7): warning C4101: 'validCandidateName': unreferenced local variable
+C:\Users\kelly\Desktop\SWE20004\SWE20004_Project\SWE20004_Project\addcandidate.cpp(222,7): warning C4101: 'validCandidateName': unreferenced local variable
   main.cpp
   Generating Code...
-  SWE20004_Project.vcxproj -> C:\Users\User\Desktop\SWE20004\SWE20004_Project\x64\Debug\SWE20004_Project.exe
+  SWE20004_Project.vcxproj -> C:\Users\kelly\Desktop\SWE20004\SWE20004_Project\x64\Debug\SWE20004_Project.exe
