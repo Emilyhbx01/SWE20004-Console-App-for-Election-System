@@ -205,6 +205,7 @@ int generateCandidateIdNo() {
 string generateCandidateID(int& candidateIdNo, string& party ) {
 	string candidateID;
 
+	//to ensure the number behind the ID is 2 digit by adding a 0 if there is only 1 digit
 	if (to_string(candidateIdNo).length() == 1) {
 		candidateID = party.substr(0, 3) + "0" + to_string(candidateIdNo);
 	}
@@ -286,7 +287,6 @@ void viewCandidate() {
 
 //This function prints out the description when program quit
 void exitProgram() {
-	cout << endl;
-	cout << "You chose quit" << endl;
+	cout << endl << "You chose quit" << endl;
 	cout << "Thank you for using this program." << endl;
 }
