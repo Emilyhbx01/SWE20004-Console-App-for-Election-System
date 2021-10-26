@@ -141,9 +141,11 @@
   <ItemGroup>
     <ClCompile Include="addcandidate.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="votecandidate.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="addcandidate.h" />
+    <ClInclude Include="votecandidate.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

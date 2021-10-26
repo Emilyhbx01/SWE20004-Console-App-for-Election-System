@@ -8,11 +8,9 @@ Program Description: This program is to add candidate into a database. This part
 */
 
 #include "addcandidate.h"
-#include <iostream>
 #include <string>
 #include <fstream>
 #include<algorithm>
-using namespace std;
 
 //This function is to print the name of each menu options
 void displayAddCandidateMenu() {

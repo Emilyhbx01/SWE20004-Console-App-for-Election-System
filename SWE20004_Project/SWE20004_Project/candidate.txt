@@ -11,3 +11,4 @@ Har10,Fred Velma,Harapan,2,0
 Har11,Crystal Xu,Harapan,3,0
 Har12,Daniel Fred,Harapan,4,0
 All13,Lily Adrin,Alliance,1,0
+tes14,emily,test,3,0

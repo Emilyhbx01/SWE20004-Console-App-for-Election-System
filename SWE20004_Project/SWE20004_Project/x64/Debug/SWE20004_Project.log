@@ -1,6 +1,2 @@
-﻿  addcandidate.cpp
-C:\Users\User\Desktop\SWE20004\SWE20004_Project\SWE20004_Project\addcandidate.cpp(223,7): warning C4101: 'validCandidateName': unreferenced local variable
-  main.cpp
-  Generating Code...
-  LINK : C:\Users\User\Desktop\SWE20004\SWE20004_Project\x64\Debug\SWE20004_Project.exe not found or not built by the last incremental link; performing full link
+﻿  main.cpp
   SWE20004_Project.vcxproj -> C:\Users\User\Desktop\SWE20004\SWE20004_Project\x64\Debug\SWE20004_Project.exe
