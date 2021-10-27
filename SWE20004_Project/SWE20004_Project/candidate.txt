@@ -1,14 +1,13 @@
-Pak01,Emily Hong,Pakatan,1,0
-Pak02,Monica Bing,Pakatan,2,0
-Pak03,Phoebe Lee,Pakatan ,3,0
-Pak04,Joey Ting ,Pakatan ,4,0
-All05,Lily Aldrin,Alliance,1,0
-All06,Ted Mosby,Alliance ,2,0
+Pak01,Emily Hong,Pakatan,1,10
+Pak02,Monica Bing,Pakatan,2,4
+Pak03,Phoebe Lee,Pakatan ,3,5
+Pak04,Joey Ting ,Pakatan ,4,6
+All05,Lily Aldrin,Alliance,1,7
+All06,Ted Mosby,Alliance ,2,10
 All07,Barry Lee,Alliance,3,0
 All08,Selena Vema,Alliance,4,0
-Har09,Neil Boon,Harapan,1,0
+Har09,Neil Boon,Harapan,1,2
 Har10,Fred Velma,Harapan,2,0
-Har11,Crystal Xu,Harapan,3,0
+Har11,Crystal Xu,Harapan,3,2
 Har12,Daniel Fred,Harapan,4,0
-All13,Lily Adrin,Alliance,1,0
-tes14,emily,test,3,0
+All13,Lily Adrin,Alliance,1,10
