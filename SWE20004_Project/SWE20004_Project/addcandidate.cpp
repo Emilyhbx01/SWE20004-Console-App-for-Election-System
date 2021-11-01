@@ -285,6 +285,5 @@ void viewCandidate() {
 
 //This function prints out the description when program quit
 void exitProgram() {
-	cout << endl << "You chose quit" << endl;
-	cout << "Thank you for using this program." << endl;
+	cout << "Thank you for using this program. Goodbye!" << endl;
 }

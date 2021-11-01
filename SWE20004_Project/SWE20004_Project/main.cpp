@@ -57,6 +57,8 @@ int main() {
 			}
 			else if (voteChoice == "5") {
 				quit();
+				run = false;
+				return 1;
 			}
 		}
 		else if (choice == "3") {
@@ -73,7 +75,8 @@ string displayMainMenu() {
 	cout << "1) Add Candidate" << endl;
 	cout << "2) Vote Candidate" << endl;
 	cout << "3) Quit" << endl;
-	
+	cout << "Enter your choice:" << endl;
+
 
 	while (!valid) {
 		getline(cin, choice);

@@ -1,7 +1,7 @@
 Pak01,Emily Hong,Pakatan,1,10
 Pak02,Monica Bing,Pakatan,2,4
-Pak03,Phoebe Lee,Pakatan ,3,5
-Pak04,Joey Ting ,Pakatan ,4,6
+Pak03,Phoebe Lee,Pakatan,3,5
+Pak04,Joey Ting,Pakatan,4,6
 All05,Lily Aldrin,Alliance,1,7
 All06,Ted Mosby,Alliance ,2,10
 All07,Barry Lee,Alliance,3,0
