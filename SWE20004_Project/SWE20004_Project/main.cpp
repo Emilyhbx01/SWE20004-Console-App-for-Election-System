@@ -44,7 +44,7 @@ int main() {
 			displayVoteMenu();
 			string voteChoice = promptVoteChoice();
 			if (voteChoice == "1") {
-				viewCandidates();
+				viewCandidatesOptions();
 			}
 			else if (voteChoice == "2") {
 				registerVoter();

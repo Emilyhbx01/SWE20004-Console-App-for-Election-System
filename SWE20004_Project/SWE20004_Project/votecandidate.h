@@ -17,3 +17,8 @@ void viewDivisionVoteResult();
 void viewAllVoteResult();
 void viewVoteResult();
 void quit();
+void printCandidatesDetails(string& candidateID, string& name, string& party, string& division, string& count);
+void viewCandidatesOptions();
+void viewCandidates();
+void viewCandidatesDivision();
+void viewCandidatesParty();

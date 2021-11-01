@@ -2,6 +2,7 @@
 #include <string>
 #include <fstream>
 #include <iomanip>
+#include <algorithm>
 
 void displayVoteMenu() {
 	cout << endl << "1) View Candidates" << endl;
@@ -190,9 +191,117 @@ void viewDivisionVoteResult() {
 
 }
 
+//Print candidate details
+void printCandidatesDetails(string& candidateID, string& name, string& party, string& division, string& count) {
+	cout << endl << "CandidateID:" << candidateID << endl;
+	cout << "Name:" << name << endl;
+	cout << "Party:" << party << endl;
+	cout << "Division:" << division << endl;
+	cout << "Count:" << count << endl << endl;
+}
 
+void viewCandidatesOptions() {
+	string choice;
+	bool valid = false;
+	cout << endl << "1) View candidates in all division." << endl;
+	cout << "2) View candidates in specific divisions" << endl;
+	cout << "3) View candidates in specific party" << endl;
+	while (!valid) {
+		cout << "Enter your choice:" << endl;
+		getline(cin, choice);
+
+		if (choice == "1") {
+			viewCandidates();
+			valid = true;
+		}
+		else if (choice == "2") {
+			viewCandidatesDivision();
+			valid = true;
+		}
+		else if (choice == "3") {
+			viewCandidatesParty();
+		}
+		else {
+			cout << "Invalid selection, please try again" << endl;
+		}
+	}
+
+}
+
+//View all candidates
 void viewCandidates() {
+	cout << endl << "Welcome!" << endl;
+	cout << "This section is to view all candidates" << endl;
+	cout << endl;
+	vector<string> candidateDetails = getCandidates();
 
+	for (int i = 0; i < candidateDetails.size(); i += 5) {
+		int nameIndex = i + 1;
+		int partyIndex = i + 2;
+		int divisionIndex = i + 3;
+		int countIndex = i + 4;
+
+		printCandidatesDetails(candidateDetails[i], candidateDetails[nameIndex], candidateDetails[partyIndex], candidateDetails[divisionIndex], candidateDetails[countIndex]);
+	}
+	cout << endl;
+}
+
+//View candidate by division
+void viewCandidatesDivision() {
+	string searchDivision;
+	bool found = false;
+	vector<string> candidateDetails = getCandidates();
+
+	cout << "Division name: " << endl;
+	getline(cin, searchDivision);
+	transform(searchDivision.begin(), searchDivision.end(), searchDivision.begin(), ::tolower);
+
+	for (int i = 0; i < candidateDetails.size(); i += 5) {
+		int divisionIndex = i + 3;
+		string division = candidateDetails[divisionIndex];
+		transform(division.begin(), division.end(), division.begin(), ::tolower);
+		if (division == searchDivision) {
+			for (int i = 0; i < candidateDetails[divisionIndex].size(); i += 5) {
+				int nameIndex = i + 1;
+				int partyIndex = i + 2;
+				int countIndex = i + 4;
+				printCandidatesDetails(candidateDetails[i], candidateDetails[nameIndex], candidateDetails[partyIndex], candidateDetails[divisionIndex], candidateDetails[countIndex]);
+				found = true;
+				break;
+			}
+		}
+		if (!found) {
+			cout << "Candidate does not exist" << endl << endl;
+		}
+	}
+}
+
+//View candidate by party
+void viewCandidatesParty() {
+	string searchParty;
+	bool found = false;
+	vector<string> candidateDetails = getCandidates();
+
+	cout << "Party name: " << endl;
+	getline(cin, searchParty);
+	transform(searchParty.begin(), searchParty.end(), searchParty.begin(), ::tolower);
+
+	for (int i = 0; i < candidateDetails.size(); i += 5) {
+		int partyIndex = i + 2;
+		string party = candidateDetails[partyIndex];
+		transform(party.begin(), party.end(), party.begin(), ::tolower);
+		if (party == searchParty) {
+			int nameIndex = i + 1;
+			int divisionIndex = i + 3;
+			int countIndex = i + 4;
+			printCandidatesDetails(candidateDetails[i], candidateDetails[nameIndex], candidateDetails[partyIndex], candidateDetails[divisionIndex], candidateDetails[countIndex]);
+			found = true;
+			break;
+		}
+	}
+	if (!found) {
+		cout << "Candidate does not exist" << endl << endl;
+	}
 }
 
 void registerVoter() {
@@ -200,13 +309,13 @@ void registerVoter() {
 	int division, status;
 	int count = 0;
 	bool validVoterName;
-	
+
 
 	//Register Voter Option [2] Description
 	cout << endl << "Welcome!" << endl;
 	cout << "This section is for voter registration." << endl;
 	cout << "Please fill each field correctly." << endl;
-	cout << endl;	
+	cout << endl;
 
 }
 void vote() {
@@ -214,12 +323,10 @@ void vote() {
 }
 
 void quit() {
+}
+
 //This function prints out the description when program quit
 void exitProgram() {
 	cout << endl << "You choose to quit the program" << endl;
 	cout << "Thank you for using this program." << endl;
 }
-
-
-
-
