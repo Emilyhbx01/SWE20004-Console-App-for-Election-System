@@ -196,6 +196,17 @@ void viewCandidates() {
 }
 
 void registerVoter() {
+	string name, age, voterID;
+	int division, status;
+	int count = 0;
+	bool validVoterName;
+	
+
+	//Register Voter Option [2] Description
+	cout << endl << "Welcome!" << endl;
+	cout << "This section is for voter registration." << endl;
+	cout << "Please fill each field correctly." << endl;
+	cout << endl;	
 
 }
 void vote() {
@@ -203,6 +214,11 @@ void vote() {
 }
 
 void quit() {
+//This function prints out the description when program quit
+void exitProgram() {
+	cout << endl << "Do you need to quit the program?" << endl;
+	cout << "Thank you for using this program." << endl;
+}
 
 }
 
