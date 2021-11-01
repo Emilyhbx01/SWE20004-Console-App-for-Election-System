@@ -216,7 +216,7 @@ void vote() {
 void quit() {
 //This function prints out the description when program quit
 void exitProgram() {
-	cout << endl << "Do you need to quit the program?" << endl;
+	cout << endl << "You choose to quit the program" << endl;
 	cout << "Thank you for using this program." << endl;
 }
 
