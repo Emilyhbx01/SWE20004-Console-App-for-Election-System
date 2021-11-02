@@ -174,7 +174,7 @@ void viewDivisionVoteResult() {
 	int maxVote = 0;
 	string division = promptSearchDivision();
 
-	cout << endl << "Candidate Name\t" << "Votes" << endl;
+	cout << endl << "ID\t" << "Candidate Name\t" << "Votes" << endl;
 	for (int i = 0; i < candidateDetails.size(); i += 5) {
 		int divIndex = i + 3;
 		if (candidateDetails[divIndex] == division) {
