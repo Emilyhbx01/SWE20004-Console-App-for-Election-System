@@ -1,7 +1,5 @@
 #include "Candidate.h"
 
-
-
 Candidate::Candidate(string id, string candidateName, string partyName, int div, int noVotes) {
 	candidateId = id;
 	name = candidateName;

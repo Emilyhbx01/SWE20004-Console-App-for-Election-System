@@ -10,4 +10,4 @@ Har09,Neil Boon,Harapan,1,2
 Har10,Fred Velma,Harapan,2,0
 Har11,Crystal Xu,Harapan,3,2
 Har12,Daniel Fred,Harapan,4,0
-All13,Lily Adrin,Alliance,1,10
+All13,Nathan Wong,Alliance,1,10
