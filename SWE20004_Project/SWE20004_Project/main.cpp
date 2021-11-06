@@ -30,7 +30,7 @@ int main() {
 			registerVoter();
 		}
 		else if (voteChoice == "3") {
-			vote();
+			voter.vote();
 		}
 		else if (voteChoice == "4") {
 			voter.viewVoteResult();

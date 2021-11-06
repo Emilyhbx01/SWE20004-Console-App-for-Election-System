@@ -36,6 +36,7 @@ class Voter {
 		void setStatus(char voteStatus);
 		void viewVoteResult();
 		void viewCandidatesOptions();
-
-
+		void vote();
+		bool login();
+		bool findVoter(string);
 };

@@ -309,3 +309,96 @@ void Voter::viewCandidatesParty() {
 		cout << "No candidates available..." << endl << endl;
 	}
 }
+
+/* Vote for candidates */
+void Voter::vote() {
+	bool loginSuccess;
+	loginSuccess = login();
+
+	if (loginSuccess == true) {
+		/* Display all the candidates in the voter's division */
+		vector<Candidate> candidates = getCandidates();
+
+		for (int i = 0; i < candidates.size(); i++) {
+			printCandidatesDetails(candidates[i]);
+		}
+
+		cout << endl;
+
+		string candidateID, confirm;
+
+		cout << endl;
+		cout << "--------------------" << endl;
+		cout << "Vote for a candidate" << endl;
+		cout << "--------------------" << endl;
+		cout << "\nEnter the candidate's ID: ";
+		getline(cin, candidateID);
+
+		cout << "Are you sure (Y/N): ";
+		getline(cin, confirm);
+	}
+	else {
+		cout << "Login failed." << endl;
+	}
+	
+}
+
+
+bool Voter::login() {
+	string id;
+	bool idExists;
+
+	while (true) {
+		cout << "Voter ID: ";
+		getline(cin, id);
+
+		idExists = findVoter(id);
+
+		if (idExists == true) {
+			return true;
+		}
+		else {
+			cout << "The voter ID you entered is not registered." << endl;
+			return false;
+		}
+	}
+}
+
+bool Voter::findVoter(string id) {
+	ifstream inputStream;
+	string fileLine = "";
+	vector<string> voterDetails;
+	inputStream.open("voter.txt", ifstream::in);
+
+	while (getline(inputStream, fileLine)) {
+		char fileLineArray[200];
+		strcpy_s(fileLineArray, fileLine.c_str());
+
+		char* remain = fileLineArray;
+		char* token;
+
+		while (token = strtok_s(remain, ",", &remain)) {
+			voterDetails.push_back(token);
+		}
+	}
+
+	inputStream.close();
+
+	bool idExists = false;
+
+	for (int i = 0; i < voterDetails.size(); i+=5) {
+		string detail = voterDetails[i];
+		if (detail == id) {
+			idExists = true;
+			break;
+		}
+	}
+
+	// Returns a value based on whether the name exists
+	if (idExists == true) {
+		return true;
+	}
+	else {
+		return false;
+	}
+}

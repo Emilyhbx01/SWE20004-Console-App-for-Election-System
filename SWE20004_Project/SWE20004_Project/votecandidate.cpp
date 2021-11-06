@@ -48,8 +48,5 @@ void registerVoter() {
 
 }
 
-void vote() {
-
-}
 
 
