@@ -1,8 +1,2 @@
 ﻿  Voter.cpp
-  main.cpp
-  votecandidate.cpp
-C:\Users\verno\Desktop\SWE20004\SWE20004_Project\SWE20004_Project\votecandidate.cpp(40,16): warning C4101: 'status': unreferenced local variable
-C:\Users\verno\Desktop\SWE20004\SWE20004_Project\SWE20004_Project\votecandidate.cpp(40,6): warning C4101: 'division': unreferenced local variable
-C:\Users\verno\Desktop\SWE20004\SWE20004_Project\SWE20004_Project\votecandidate.cpp(42,7): warning C4101: 'validVoterName': unreferenced local variable
-  Generating Code...
-  SWE20004_Project.vcxproj -> C:\Users\verno\Desktop\SWE20004\SWE20004_Project\x64\Debug\SWE20004_Project.exe
+  SWE20004_Project.vcxproj -> C:\Users\kelly\Desktop\SWE20004\SWE20004_Project\x64\Debug\SWE20004_Project.exe

@@ -1,3 +1,12 @@
+/*
+Name: Bhagya Priyadarshani Kumari Wijesuriya (101216659)
+	  Emily Hong Boon Xuan (101220757)
+	  Kelly Jee Li Zhen (102761529)
+	  Vernon Chai Chyn Yeong (101223031)
+Program Description: This program is a voting system that consists of 2 databases for candidates and voters in .txt files.
+					 This part of the program shows the class for voter where the functions used in the voter.cpp.
+*/
+
 #pragma once
 #include <iostream>
 #include <vector>

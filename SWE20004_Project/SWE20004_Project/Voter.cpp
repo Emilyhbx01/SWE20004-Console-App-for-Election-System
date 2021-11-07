@@ -1,3 +1,17 @@
+/*
+Name: Bhagya Priyadarshani Kumari Wijesuriya (101216659)
+	  Emily Hong Boon Xuan (101220757)
+	  Kelly Jee Li Zhen (102761529)
+	  Vernon Chai Chyn Yeong (101223031)
+Program Description: This program is a voting system that consists of 2 databases for candidates and voters in .txt files.
+					 This part of the program shows the writing of the voter part in the program which includes:
+					 1) view candidates details in all division or by specific division or party.
+					 2) registering voters.
+					 3) voting for candidates by voters.
+					 4) view vote results summary in all division or specific division.
+					 5) quiiting the program.	 
+*/
+
 #include "Voter.h"
 #include <fstream>
 #include <string>
@@ -45,6 +59,7 @@ void Voter::setStatus(char voteStatus) {
 	status = voteStatus;
 }
 
+//Reading candidate text file
 vector<Candidate> Voter::getCandidates() {
 	ifstream inputStream;
 	string fileLine = "";
@@ -76,10 +91,12 @@ vector<Candidate> Voter::getCandidates() {
 			candidates.push_back(candidate);
 		}
 	}
-
 	return candidates;
 }
 
+//User input validation for the view vote results by division
+//This part ensure that the user input for division is valid which is input of 1 to 4
+//Other input will be considered invalid by printing a message to inform of the invalid input
 string Voter::promptSearchDivision() {
 	bool valid = false;
 	string searchDivision;
@@ -94,10 +111,10 @@ string Voter::promptSearchDivision() {
 			cout << "Invalid division...Please try again" << endl;
 		}
 	}
-
 	return searchDivision;
 }
 
+//This function is the menu options for the view vote results where user can choose to view the result by specific division or all division
 void Voter::viewVoteResult() {
 	string choice;
 	bool valid = false;
@@ -121,7 +138,7 @@ void Voter::viewVoteResult() {
 	}
 }
 
-//display candidate detail
+//Displaying candidate detail for the view vote result
 void Voter::printCandidateSummary(string candidateID, string name, string party, int vote, double percentage) {
 	cout << "Candidate ID:" << candidateID << endl;
 	cout << "Candidate Name:" << name << endl;
@@ -131,7 +148,7 @@ void Voter::printCandidateSummary(string candidateID, string name, string party,
 	cout << "Percentage:" << percentage << "%" << endl << endl;
 }
 
-//find all candidate with highest or lowest votes (may have more than 1 candidate)
+//Find all candidate with highest or lowest votes (may have more than 1 candidate)
 void Voter::findCandidate(vector<Candidate> candidates, int totalVotes, int vote) {
 
 	for (Candidate candidate : candidates) {
@@ -146,7 +163,7 @@ void Voter::findCandidate(vector<Candidate> candidates, int totalVotes, int vote
 	}
 }
 
-//summarise voting result for all divisions
+//Summarise voting result for all divisions
 void Voter::summariseAllVoteResult(string divisionPhrase, vector<Candidate> candidates, int totalVotes, int maxVote, int minVote) {
 	cout << endl << "Total vote for " << divisionPhrase << ":" << endl << totalVotes << endl;
 	cout << endl << "Candidates with highest vote" << ":" << endl;
@@ -156,7 +173,7 @@ void Voter::summariseAllVoteResult(string divisionPhrase, vector<Candidate> cand
 }
 
 
-//display voting result for all divisions
+//Display voting result for all divisions
 void Voter::viewAllVoteResult() {
 	vector<Candidate> candidates = getCandidates();
 	int totalVotes = 0;
@@ -173,21 +190,15 @@ void Voter::viewAllVoteResult() {
 		if (candidateVote < minVote) {
 			minVote = candidateVote;
 		}
-
 		if (candidateVote > maxVote) {
 			maxVote = candidateVote;
 		}
-
 	}
-
 	summariseAllVoteResult("all divisions", candidates, totalVotes, maxVote, minVote);
-
-
 }
 
-//display voting result for certain division
+//Display voting result for certain division
 void Voter::viewDivisionVoteResult() {
-
 	int totalVotes = 0;
 	vector<Candidate> candidates = getCandidates();
 	vector<Candidate> divisionCandidates;
@@ -212,10 +223,9 @@ void Voter::viewDivisionVoteResult() {
 		}
 	}
 	summariseAllVoteResult("division " + to_string(division), divisionCandidates, totalVotes, maxVote, minVote);
-
 }
 
-//Print candidate details
+//Print candidate details for view candidates
 void Voter::printCandidatesDetails(Candidate candidate) {
 	cout << endl << "CandidateID:" << candidate.getCandidateId() << endl;
 	cout << "Name:" << candidate.getName() << endl;
@@ -224,6 +234,7 @@ void Voter::printCandidatesDetails(Candidate candidate) {
 	cout << "Votes:" << candidate.getVotes() << endl << endl;
 }
 
+//Menu options for view candidates details in all division or by specific division or party
 void Voter::viewCandidatesOptions() {
 	string choice;
 	bool valid = false;
@@ -250,13 +261,11 @@ void Voter::viewCandidatesOptions() {
 			cout << "Invalid selection, please try again" << endl;
 		}
 	}
-
 }
 
-//View all candidates
+//View all candidates in all division
 void Voter::viewCandidates() {
-	cout << endl << "Welcome!" << endl;
-	cout << "This section is to view all candidates" << endl << endl;
+	cout << "This section is to view all candidates in all division." << endl << endl;
 	vector<Candidate> candidates = getCandidates();
 
 	for (Candidate candidate : candidates) {
@@ -266,12 +275,12 @@ void Voter::viewCandidates() {
 }
 
 
-//View candidate by division
+//View candidate by specific division
 void Voter::viewCandidatesDivision() {
-
 	bool found = false;
 	vector<Candidate> candidates = getCandidates();
 	int searchDivision = stoi(promptSearchDivision());
+	cout << "This section is to view candidates in the specified division." << endl;
 
 	for (Candidate candidate : candidates) {
 		if (candidate.getDivision() == searchDivision) {
@@ -285,11 +294,12 @@ void Voter::viewCandidatesDivision() {
 	}
 }
 
-//View candidate by party
+//View candidate by specific party
 void Voter::viewCandidatesParty() {
 	string searchParty;
 	bool found = false;
 	vector<Candidate> candidates = getCandidates();
+	cout << "This section is to view candidates in the specified party." << endl;
 
 	cout << "Party name: " << endl;
 	getline(cin, searchParty);
@@ -310,13 +320,13 @@ void Voter::viewCandidatesParty() {
 	}
 }
 
-/* Vote for candidates */
+//Vote for candidates
 void Voter::vote() {
 	bool loginSuccess;
 	loginSuccess = login();
 
 	if (loginSuccess == true) {
-		/* Display all the candidates in the voter's division */
+		//Display all the candidates in the voter's division
 		vector<Candidate> candidates = getCandidates();
 
 		for (int i = 0; i < candidates.size(); i++) {
@@ -340,10 +350,9 @@ void Voter::vote() {
 	else {
 		cout << "Login failed." << endl;
 	}
-	
 }
 
-
+//User input validation to ensure that the voter ID is valid, else a message will prompt informing that the input is invalid
 bool Voter::login() {
 	string id;
 	bool idExists;
@@ -364,6 +373,7 @@ bool Voter::login() {
 	}
 }
 
+//This function is to find the voter in the voter text file
 bool Voter::findVoter(string id) {
 	ifstream inputStream;
 	string fileLine = "";
@@ -394,7 +404,7 @@ bool Voter::findVoter(string id) {
 		}
 	}
 
-	// Returns a value based on whether the name exists
+	//Returns a value based on whether the name exists
 	if (idExists == true) {
 		return true;
 	}

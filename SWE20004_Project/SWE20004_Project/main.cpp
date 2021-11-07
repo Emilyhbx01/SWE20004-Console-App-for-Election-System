@@ -3,9 +3,9 @@ Name: Bhagya Priyadarshani Kumari Wijesuriya (101216659)
 	  Emily Hong Boon Xuan (101220757)
 	  Kelly Jee Li Zhen (102761529)
 	  Vernon Chai Chyn Yeong (101223031)
-Program Description: This program is to create a database for candidates and storing it into .txt file.
-					 This part of the program is the main function where multiples functions are called to perform the adding candidates
-					 into the database. Users can add, view, search and exit the program by inputting their choices.
+Program Description: This program is a voting system that consists of 2 databases for candidates and voters in .txt files. 
+					 This part of the program shows the menu options to view candidates, register voters, voting, view voting results and quitting
+					 program.
 */
 
 #include <iostream>
@@ -24,23 +24,22 @@ int main() {
 		Voter voter;
 
 		if (voteChoice == "1") {
-			voter.viewCandidatesOptions();
-		}
-		else if (voteChoice == "2") {
-			registerVoter();
-		}
-		else if (voteChoice == "3") {
-			voter.vote();
-		}
-		else if (voteChoice == "4") {
-			voter.viewVoteResult();
-		}
-		else if (voteChoice == "5") {
-			quit();
+			voter.viewCandidatesOptions(); //Menu option 1 that is to view candidates
+		}								   	
+		else if (voteChoice == "2") {	   
+			registerVoter();			   //Menu option 2 that is to register voters
+		}								   								  
+		else if (voteChoice == "3") {	   
+			voter.vote();				   //Menu option 3 that is to vote
+		}								   
+		else if (voteChoice == "4") {	   
+			voter.viewVoteResult();		   //Menu option 4 is to view the result of the voting
+		}								   
+		else if (voteChoice == "5") {	   
+			quit();						   //Menu option 5 is to quit the program
 			run = false;
 			return 1;
 		}
-		
 	}
 	return 0;
 }
