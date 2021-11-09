@@ -322,59 +322,129 @@ void Voter::viewCandidatesParty() {
 
 //Vote for candidates
 void Voter::vote() {
-	bool loginSuccess;
-	loginSuccess = login();
+	string voterID;
+	Voter myVoter;
+	
+	voterID = verifyVoter();
 
-	if (loginSuccess == true) {
-		//Display all the candidates in the voter's division
-		vector<Candidate> candidates = getCandidates();
+	//Proceed when voter has been verified
+	if (voterID != "Q") {
+		if (!voterID.empty()) {
+			//Get the voter
+			vector<Voter> voters = getVoters();
 
-		for (int i = 0; i < candidates.size(); i++) {
-			printCandidatesDetails(candidates[i]);
+			for (Voter v : voters) {
+				if (v.getVoterId() == voterID)
+					myVoter = v;
+			}
+
+			//Display all the candidates in the voter's division
+			vector<Candidate> candidates = getCandidates();
+
+			for (Candidate c : candidates) {
+				if (c.getDivision() == myVoter.getDivision())
+					printCandidatesDetails(c);
+			}
+
+			cout << endl;
+
+			string candidateID, confirm;
+
+			cout << "--------------------" << endl;
+			cout << "Vote for a candidate" << endl;
+			cout << "--------------------" << endl;
+			cout << "\nEnter the candidate's ID: ";
+			getline(cin, candidateID);
+
+			cout << "Are you sure (Y/N): ";
+			getline(cin, confirm);
 		}
-
-		cout << endl;
-
-		string candidateID, confirm;
-
-		cout << endl;
-		cout << "--------------------" << endl;
-		cout << "Vote for a candidate" << endl;
-		cout << "--------------------" << endl;
-		cout << "\nEnter the candidate's ID: ";
-		getline(cin, candidateID);
-
-		cout << "Are you sure (Y/N): ";
-		getline(cin, confirm);
-	}
-	else {
-		cout << "Login failed." << endl;
+		else {
+			cout << "Login failed." << endl;
+		}
 	}
 }
 
-//User input validation to ensure that the voter ID is valid, else a message will prompt informing that the input is invalid
-bool Voter::login() {
+//Verifies that the voter ID given is valid and returns the voter ID
+string Voter::verifyVoter() {
 	string id;
-	bool idExists;
+	Voter myVoter;
+	bool idExists = false;
 
 	while (true) {
-		cout << "Voter ID: ";
+		cout << "\nVoter ID (Q: Exit): ";
 		getline(cin, id);
 
-		idExists = findVoter(id);
+		if (id == "Q" || id == "q")
+			return "Q";
 
-		if (idExists == true) {
-			return true;
+		vector<Voter> voters = getVoters();
+
+		for (Voter v : voters) {
+			if (v.getVoterId() == id) {
+				myVoter = v;
+				idExists = true;
+			}
 		}
-		else {
-			cout << "The voter ID you entered is not registered." << endl;
-			return false;
+
+		if (idExists)
+			return id;
+		else
+			cout << "The voter ID you entered is not registered. Please try again." << endl;
+	}
+}
+
+//Get the voters details from the voter text file
+vector<Voter> Voter::getVoters() {
+	ifstream inputStream;
+	string fileLine = "";
+	vector<string> voterDetails;
+	vector<Voter> voters;
+
+	inputStream.open("voter.txt", ifstream::in);
+
+	while (getline(inputStream, fileLine)) {
+		char fileLineArray[200];
+		strcpy_s(fileLineArray, fileLine.c_str());
+
+		//Split line by comma
+		char* remain = fileLineArray;
+		char* token;
+		while (token = strtok_s(remain, ",", &remain)) {
+			voterDetails.push_back(token);
 		}
 	}
+
+	inputStream.close();
+
+	if (!voterDetails.empty()) {
+		for (int i = 0; i < voterDetails.size(); i += 5) {
+			int name = i + 1, age = i + 2, div = i + 3, vote = i + 4;
+
+			Voter voter(voterDetails[i], voterDetails[name], stoi(voterDetails[age]), stoi(voterDetails[div]), stoi(voterDetails[vote]));
+			voters.push_back(voter);
+		}
+	}
+
+	return voters;
 }
 
 //This function is to find the voter in the voter text file
-bool Voter::findVoter(string id) {
+/*vector<Voter> Voter::findVoter(string id) {
+	vector<Voter> voters = getVoters();
+
+	for (Voter v : voters) {
+		if (v.getVoterId() == id) {
+			return voters;
+		}
+		else {
+			return false;
+		}
+	}
+}*/
+
+//Retrieves voters' details from the text file
+/*vector<string> readVoterFile() {
 	ifstream inputStream;
 	string fileLine = "";
 	vector<string> voterDetails;
@@ -390,25 +460,9 @@ bool Voter::findVoter(string id) {
 		while (token = strtok_s(remain, ",", &remain)) {
 			voterDetails.push_back(token);
 		}
-	}
 
-	inputStream.close();
+		inputStream.close();
 
-	bool idExists = false;
-
-	for (int i = 0; i < voterDetails.size(); i+=5) {
-		string detail = voterDetails[i];
-		if (detail == id) {
-			idExists = true;
-			break;
-		}
+		return voterDetails;
 	}
-
-	//Returns a value based on whether the name exists
-	if (idExists == true) {
-		return true;
-	}
-	else {
-		return false;
-	}
-}
+}*/

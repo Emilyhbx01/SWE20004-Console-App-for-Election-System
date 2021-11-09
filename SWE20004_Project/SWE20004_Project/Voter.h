@@ -45,7 +45,9 @@ class Voter {
 		void setStatus(char voteStatus);
 		void viewVoteResult();
 		void viewCandidatesOptions();
+		vector<Voter> getVoters();
 		void vote();
-		bool login();
-		bool findVoter(string);
+		string verifyVoter();
+		//vector<Voter> findVoter(string);
+		//int getVoterDivision();
 };
