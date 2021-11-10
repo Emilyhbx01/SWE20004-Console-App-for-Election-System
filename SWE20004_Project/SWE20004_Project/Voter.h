@@ -35,7 +35,7 @@ class Voter {
 		void viewCandidatesParty();
 
 	public:
-		Voter(string id, string voterName, int voterAge, int div, char voteStatus);
+		Voter(string id, string voterName, int voterAge, int div, int voteStatus);
 		Voter();
 		string getVoterId();
 		string getName();
@@ -48,6 +48,7 @@ class Voter {
 		vector<Voter> getVoters();
 		void vote();
 		string verifyVoter();
+		void checkVoteStatus(Voter);
 		void registerVoter();
 		void quit();
 };

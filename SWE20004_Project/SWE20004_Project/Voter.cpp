@@ -23,10 +23,10 @@ Voter::Voter() {
 	name = "";
 	age = NULL;
 	division = NULL;
-	status = 'N';
+	status = NULL;
 }
 
-Voter::Voter(string id, string voterName, int voterAge, int div, char voteStatus) {
+Voter::Voter(string id, string voterName, int voterAge, int div, int voteStatus) {
 	voterID = id;
 	name = voterName;
 	age = voterAge;
@@ -350,19 +350,31 @@ void Voter::vote() {
 
 			string candidateID, confirm;
 
+			//Voting section
 			cout << "--------------------" << endl;
 			cout << "Vote for a candidate" << endl;
 			cout << "--------------------" << endl;
-			cout << "\nEnter the candidate's ID: ";
-			getline(cin, candidateID);
 
-			cout << "Are you sure (Y/N): ";
-			getline(cin, confirm);
+			//Checks if the voter has already voted or not
+			if (myVoter.getStatus() == 0) {
+				cout << "\nEnter the candidate's ID: ";
+				getline(cin, candidateID);
+
+				cout << "Are you sure (Y/N): ";
+				getline(cin, confirm);
+			}
+			else {
+				cout << "You have already voted\n" << endl;
+			}
 		}
 		else {
 			cout << "Login failed." << endl;
 		}
 	}
+}
+
+void Voter::checkVoteStatus(Voter v) {
+	
 }
 
 //Verifies that the voter ID given is valid and returns the voter ID
