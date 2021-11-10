@@ -27,7 +27,7 @@ int main() {
 			voter.viewCandidatesOptions(); //Menu option 1 that is to view candidates
 		}								   	
 		else if (voteChoice == "2") {	   
-			registerVoter();			   //Menu option 2 that is to register voters
+			voter.registerVoter();			   //Menu option 2 that is to register voters
 		}								   								  
 		else if (voteChoice == "3") {	   
 			voter.vote();				   //Menu option 3 that is to vote
@@ -36,7 +36,7 @@ int main() {
 			voter.viewVoteResult();		   //Menu option 4 is to view the result of the voting
 		}								   
 		else if (voteChoice == "5") {	   
-			quit();						   //Menu option 5 is to quit the program
+			voter.quit();						   //Menu option 5 is to quit the program
 			run = false;
 			return 1;
 		}

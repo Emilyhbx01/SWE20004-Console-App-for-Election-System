@@ -48,6 +48,6 @@ class Voter {
 		vector<Voter> getVoters();
 		void vote();
 		string verifyVoter();
-		//vector<Voter> findVoter(string);
-		//int getVoterDivision();
+		void registerVoter();
+		void quit();
 };
