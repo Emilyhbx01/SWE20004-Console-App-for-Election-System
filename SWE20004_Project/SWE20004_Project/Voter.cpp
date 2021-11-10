@@ -427,4 +427,22 @@ vector<Voter> Voter::getVoters() {
 	}
 
 	return voters;
+	
+//This function is the menu options for the register voters where user can see if voters are registered more than once and eligible age more than 19
+void Voter:: registerVoter() {
+	
+	string name, age, voterID;
+	int division, status;
+	int count = 0;
+	bool validVoterName;
+
+	cout << endl << "Welcome!" << endl;
+	cout << "This section is for voter registration." << endl;
+	cout << "Please fill each field correctly." << endl;
+	cout << endl;
+		
+void quit() {
+	cout << "Thank you for using this program. Goodbye!" << endl;
+
+	
 }
