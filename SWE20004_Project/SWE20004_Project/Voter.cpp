@@ -454,6 +454,14 @@ void Voter::registerVoter() {
 	cout << "Please fill each field correctly." << endl;
 	cout << endl;
 }
+
+        name = promptVoterName();
+	age = promptVoterAge();
+	division = stoi(promptDivision());
+	voterIdNo = generateVoterIdNo();
+	voterID = generateVoterID(voterIdNo,name);
+	inputToFile(voterID, name, age, division, status);
+}
 		
 void Voter::quit() {
 	cout << "Thank you for using this program. Goodbye!" << endl;
