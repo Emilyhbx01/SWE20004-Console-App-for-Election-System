@@ -42,13 +42,13 @@ class Voter {
 		int getAge();
 		int getDivision();
 		int getStatus();
-		void setStatus(char voteStatus);
+		void setStatus(int voteStatus);
 		void viewVoteResult();
 		void viewCandidatesOptions();
 		vector<Voter> getVoters();
 		void vote();
+		void changeValues(Candidate, Voter);
 		string verifyVoter();
-		void checkVoteStatus(Voter);
 		void registerVoter();
 		void quit();
 };

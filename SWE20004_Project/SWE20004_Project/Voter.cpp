@@ -54,8 +54,7 @@ int Voter::getStatus() {
 	return status;
 }
 
-
-void Voter::setStatus(char voteStatus) {
+void Voter::setStatus(int voteStatus) {
 	status = voteStatus;
 }
 
@@ -322,7 +321,7 @@ void Voter::viewCandidatesParty() {
 
 //Vote for candidates
 void Voter::vote() {
-	string voterID;
+	string voterID, candidateID, confirm;
 	Voter myVoter;
 	
 	voterID = verifyVoter();
@@ -346,22 +345,62 @@ void Voter::vote() {
 					printCandidatesDetails(c);
 			}
 
-			cout << endl;
-
-			string candidateID, confirm;
-
 			//Voting section
-			cout << "--------------------" << endl;
+			cout << "\n--------------------" << endl;
 			cout << "Vote for a candidate" << endl;
 			cout << "--------------------" << endl;
 
 			//Checks if the voter has already voted or not
 			if (myVoter.getStatus() == 0) {
-				cout << "\nEnter the candidate's ID: ";
-				getline(cin, candidateID);
+				while (true) {
+					bool loop = true;
 
-				cout << "Are you sure (Y/N): ";
-				getline(cin, confirm);
+					cout << "\nEnter the candidate's ID (Q: Exit): ";
+					getline(cin, candidateID);
+
+					//Exits the voting section
+					if (candidateID == "Q" || candidateID == "q") {
+						break;
+					}
+
+					//Checks if the candidate ID is valid and in the same division as the voter
+					bool candidateExists = false;
+
+					for (Candidate c : candidates) {
+						if (candidateID == c.getCandidateId() && c.getDivision() == myVoter.getDivision()) {
+							//Gets the voters confirmation on their vote
+							while (true) {
+								cout << "Are you sure (Y/N): ";
+								getline(cin, confirm);
+
+								if (confirm == "Y" || confirm == "y") {
+									changeValues(c, myVoter);
+									loop = false;
+
+									break;
+								}
+								else if (confirm == "N" || confirm == "n") {
+									break;
+								}
+								else {
+									cout << "Invalid input. Please try again." << endl;
+								}
+							}
+
+							candidateExists = true;
+							break;
+						}
+					}
+
+					//Breaks the loop once the vote succeeds
+					if (loop == false)
+						break;
+
+					//Displays an error message if the candidate could not be found
+					if (candidateExists == false) {
+						cout << "The candidate could not be found. Please try again." << endl;
+					}
+				}
 			}
 			else {
 				cout << "You have already voted\n" << endl;
@@ -373,8 +412,53 @@ void Voter::vote() {
 	}
 }
 
-void Voter::checkVoteStatus(Voter v) {
-	
+//Increases the vote count for the candidate and the voters voting status in their respective text files
+void Voter::changeValues(Candidate candidate, Voter voter) {
+	vector<Candidate> candidates = getCandidates(), newCandidates = {};
+	vector<Voter> voters = getVoters(), newVoters = {};
+
+	ofstream outputStream;
+
+	outputStream.open("candidate.txt", ios::out);
+
+	//Increases the vote count of the candidate
+	if (outputStream.is_open()) {
+		for (Candidate c : candidates) {
+			if (candidate.getCandidateId() == c.getCandidateId())
+				c.setVotes(c.getVotes() + 1);
+
+			newCandidates.push_back(c);
+		}
+
+		for (Candidate c : newCandidates)
+			outputStream << c.getCandidateId() + "," + c.getName() + "," << c.getParty() + "," + to_string(c.getDivision()) + "," + to_string(c.getVotes()) << endl;
+	}
+	else {
+		cout << "Error: The candidate text file could not be opened." << endl;
+	}
+
+	outputStream.close();
+
+	outputStream.open("voter.txt", ios::out);
+
+	//Sets the voters voting status to voted
+	if (outputStream.is_open()) {
+		for (Voter v : voters) {
+			if (voter.getVoterId() == v.getVoterId()) {
+				v.setStatus(1);
+
+			newVoters.push_back(v);
+			}
+		}
+
+		for (Voter v : newVoters)
+			outputStream << v.getVoterId() << "," << v.getName() << "," << v.getAge() << "," << v.getDivision() << "," << v.getStatus() << endl;
+	}
+	else {
+		cout << "Error: The voter text file could not be opened." << endl;
+	}
+
+	outputStream.close();
 }
 
 //Verifies that the voter ID given is valid and returns the voter ID
