@@ -328,13 +328,16 @@ void Voter::vote() {
 	voterID = verifyVoter();
 
 	//Proceed when voter has been verified
-	if (voterID != "Q") {
+	if (voterID != "q") {
 		if (!voterID.empty()) {
 			//Get the voter
 			vector<Voter> voters = getVoters();
 
 			for (Voter v : voters) {
-				if (v.getVoterId() == voterID)
+				string vID = v.getVoterId();
+				transform(vID.begin(), vID.end(), vID.begin(), [](unsigned char c) {return tolower(c); });
+
+				if (vID == voterID)
 					myVoter = v;
 			}
 
@@ -358,6 +361,8 @@ void Voter::vote() {
 					cout << "\nEnter the candidate's ID (Q: Exit): ";
 					getline(cin, candidateID);
 
+					transform(candidateID.begin(), candidateID.end(), candidateID.begin(), [](unsigned char c) {return tolower(c); });
+
 					//Exits the voting section
 					if (candidateID == "Q" || candidateID == "q") {
 						break;
@@ -365,7 +370,10 @@ void Voter::vote() {
 
 					//Checks if the candidate ID is valid and in the same division as the voter
 					for (Candidate c : candidates) {
-						if (candidateID == c.getCandidateId() && c.getDivision() == myVoter.getDivision()) {
+						string id = c.getCandidateId();
+						transform(id.begin(), id.end(), id.begin(), [](unsigned char c) {return tolower(c); });
+
+						if (candidateID == id && c.getDivision() == myVoter.getDivision()) {
 							//Gets the voters confirmation on their vote
 							while (true) {
 								cout << "Are you sure (Y/N): ";
@@ -474,14 +482,19 @@ string Voter::verifyVoter() {
 		cout << "\nVoter ID (Q: Exit): ";
 		getline(cin, id);
 
+		transform(id.begin(), id.end(), id.begin(), [](unsigned char c) {return tolower(c); });
+
 		//Exits the function
-		if (id == "Q" || id == "q")
-			return "Q";
+		if (id == "q")
+			return "q";
 
 		vector<Voter> voters = getVoters();
 
 		for (Voter v : voters) {
-			if (v.getVoterId() == id) {
+			string voterID = v.getVoterId();
+			transform(voterID.begin(), voterID.end(), voterID.begin(), [](unsigned char c) {return tolower(c); });
+			
+			if (voterID == id) {
 				myVoter = v;
 				idExists = true;
 			}
