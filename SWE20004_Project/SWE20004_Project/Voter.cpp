@@ -584,6 +584,32 @@ vector<string> readVoteFile() {
 	}
 	inputStream.close();
 	return voterDetails;
+	
+//This function is to check if the voter's name is already exists in the database
+bool validateVoterName(string name) {
+	vector<string> voterDetails = readVoteFile();
+	bool nameExists = false;
+	transform(name.begin(), name.end(), name.begin(), ::tolower);
+
+	for (int i = 1; i < voterDetails.size(); i += 5) {
+		string detail = voterDetails[i];
+		transform(detail.begin(), detail.end(), detail.begin(), ::tolower);
+		if (detail == name) {
+			nameExists = true;
+			break;
+		}
+	}
+
+	// Returns a value based on whether the name exists
+	if (nameExists == true) {
+		cout << "Voter's name is already registered." << endl;
+		return false;
+	}
+	else {
+		return true;
+	}
+}
+
 
 //This function prints out the description when program quit	
 void Voter::quit() {
