@@ -23,10 +23,10 @@ Voter::Voter() {
 	name = "";
 	age = NULL;
 	division = NULL;
-	status = NULL;
+	status = "";
 }
 
-Voter::Voter(string id, string voterName, int voterAge, int div, int voteStatus) {
+Voter::Voter(string id, string voterName, int voterAge, int div, string voteStatus) {
 	voterID = id;
 	name = voterName;
 	age = voterAge;
@@ -50,11 +50,11 @@ int Voter::getDivision() {
 	return division;
 }
 
-int Voter::getStatus() {
+string Voter::getStatus() {
 	return status;
 }
 
-void Voter::setStatus(int voteStatus) {
+void Voter::setStatus(string voteStatus) {
 	status = voteStatus;
 }
 
@@ -323,6 +323,7 @@ void Voter::viewCandidatesParty() {
 void Voter::vote() {
 	string voterID, candidateID, confirm;
 	Voter myVoter;
+	bool candidateExists = false;
 	
 	voterID = verifyVoter();
 
@@ -345,13 +346,12 @@ void Voter::vote() {
 					printCandidatesDetails(c);
 			}
 
-			//Voting section
-			cout << "\n--------------------" << endl;
-			cout << "Vote for a candidate" << endl;
-			cout << "--------------------" << endl;
-
 			//Checks if the voter has already voted or not
-			if (myVoter.getStatus() == 0) {
+			if (myVoter.getStatus() == "Not Voted") {
+				cout << "\n--------------------" << endl;
+				cout << "Vote for a candidate" << endl;
+				cout << "--------------------" << endl;
+
 				while (true) {
 					bool loop = true;
 
@@ -364,8 +364,6 @@ void Voter::vote() {
 					}
 
 					//Checks if the candidate ID is valid and in the same division as the voter
-					bool candidateExists = false;
-
 					for (Candidate c : candidates) {
 						if (candidateID == c.getCandidateId() && c.getDivision() == myVoter.getDivision()) {
 							//Gets the voters confirmation on their vote
@@ -375,6 +373,11 @@ void Voter::vote() {
 
 								if (confirm == "Y" || confirm == "y") {
 									changeValues(c, myVoter);
+
+									//Provide voting feedback to the voter
+									cout << "\nThank you for voting " + myVoter.getName() + "." << endl;
+									cout << "You have successfully voted for " + c.getCandidateId() + " " + c.getName() + ".\n" << endl;
+
 									loop = false;
 
 									break;
@@ -421,7 +424,7 @@ void Voter::changeValues(Candidate candidate, Voter voter) {
 
 	outputStream.open("candidate.txt", ios::out);
 
-	//Increases the vote count of the candidate
+	//Increases the vote count of the candidate in the candidate text file
 	if (outputStream.is_open()) {
 		for (Candidate c : candidates) {
 			if (candidate.getCandidateId() == c.getCandidateId())
@@ -441,11 +444,11 @@ void Voter::changeValues(Candidate candidate, Voter voter) {
 
 	outputStream.open("voter.txt", ios::out);
 
-	//Sets the voters voting status to voted
+	//Sets the voters voting status to voted in the voter text file
 	if (outputStream.is_open()) {
 		for (Voter v : voters) {
 			if (voter.getVoterId() == v.getVoterId()) {
-				v.setStatus(1);
+				v.setStatus("Voted");
 
 			newVoters.push_back(v);
 			}
@@ -471,6 +474,7 @@ string Voter::verifyVoter() {
 		cout << "\nVoter ID (Q: Exit): ";
 		getline(cin, id);
 
+		//Exits the function
 		if (id == "Q" || id == "q")
 			return "Q";
 
@@ -483,6 +487,7 @@ string Voter::verifyVoter() {
 			}
 		}
 
+		//Only returns a value when the Voter ID is found
 		if (idExists)
 			return id;
 		else
@@ -517,14 +522,14 @@ vector<Voter> Voter::getVoters() {
 		for (int i = 0; i < voterDetails.size(); i += 5) {
 			int name = i + 1, age = i + 2, div = i + 3, vote = i + 4;
 
-			Voter voter(voterDetails[i], voterDetails[name], stoi(voterDetails[age]), stoi(voterDetails[div]), stoi(voterDetails[vote]));
+			Voter voter(voterDetails[i], voterDetails[name], stoi(voterDetails[age]), stoi(voterDetails[div]), voterDetails[vote]);
 			voters.push_back(voter);
 		}
 	}
 
 	return voters;
 }
-	
+
 //This function is the menu options for the register voters where user can see if voters are registered more than once and eligible age more than 19
 void Voter::registerVoter() {
 
@@ -538,14 +543,14 @@ void Voter::registerVoter() {
 	cout << "Please fill each field correctly." << endl;
 	cout << endl;
 }
-
+/*
         name = promptVoterName();
 	age = promptVoterAge();
 	division = stoi(promptDivision());
 	voterIdNo = generateVoterIdNo();
-	voterID = generateVoterID(voterIdNo,name);
+	voterID = generateVoterID(voterIdNo,name);git 
 	inputToFile(voterID, name, age, division, status);
-}
+}*/
 
 //This function prints out the description when program quit	
 void Voter::quit() {
