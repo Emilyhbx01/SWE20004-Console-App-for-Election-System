@@ -565,6 +565,26 @@ void Voter::registerVoter() {
 	inputToFile(voterID, name, age, division, status);
 }*/
 
+vector<string> readVoteFile() {
+	ifstream inputStream;
+	string fileLine = "";
+	vector<string> voterDetails;
+	inputStream.open("vote.txt", ifstream::in);
+
+	while (getline(inputStream, fileLine)) {
+		char fileLineArray[200];
+		strcpy_s(fileLineArray, fileLine.c_str());
+
+		//Split line by comma
+		char* remain = fileLineArray;
+		char* token;
+		while (token = strtok_s(remain, ",", &remain)) {
+			voterDetails.push_back(token);
+		}
+	}
+	inputStream.close();
+	return voterDetails;
+
 //This function prints out the description when program quit	
 void Voter::quit() {
 	cout << "Thank you for using this program. Goodbye!" << endl;
