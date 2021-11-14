@@ -543,7 +543,7 @@ vector<Voter> Voter::getVoters() {
 	return voters;
 }
 
-//This function is the menu options for the register voters where user can see if voters are registered more than once and eligible age more than 19
+//This function is the menu options for the register voters 
 void Voter::registerVoter() {
 
 	string name, age, voterID;
