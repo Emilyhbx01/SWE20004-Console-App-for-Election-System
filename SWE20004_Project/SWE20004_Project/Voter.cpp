@@ -38,7 +38,29 @@ string Voter::getVoterId() {
 	return voterID;
 }
 
+//This function is for the user to add their name as a voter in the form of string
 string Voter::getName() {
+	string name;
+	bool valid = false;
+
+		while (!valid) {
+			cout << endl << "Name of voter:" << endl;
+			getline(cin, name);
+			for (unsigned int i = 0; i < name.length(); i++) {
+				char letter = name[i];
+				if (!isalpha(letter) && (!isspace(letter))) {
+					cout << "Invalid input" << endl;
+					valid = false;
+					break;
+				}
+				else if (isalpha(letter)) {
+
+					valid = validatevoterName(name);
+					break;
+				}
+			}
+		}
+		
 	return name;
 }
 
