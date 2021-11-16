@@ -668,6 +668,20 @@ int generateVoterIdNo() {
 	return newVoterNo;
 }
 
+//This function generate the full voter ID
+string generateVoterID(int& voterIdNo, string& name) {
+	string voterID;
+
+	//to ensure the number behind the ID is 2 digit by adding a 0 if there is only 1 digit
+	if (to_string(voterIdNo).length() == 1) {
+		voterID = name.substr(0, 3) + "0" + to_string(voterIdNo);
+	}
+	else {
+		voterID = name.substr(0, 3) + to_string(voterIdNo);
+	}
+	return voterID;
+}
+
 //This function is to check if the voter's name is already exists in the database
 bool Voter::validateVoterName(string name) {
 	vector<string> voterDetails = readVoteFile();
