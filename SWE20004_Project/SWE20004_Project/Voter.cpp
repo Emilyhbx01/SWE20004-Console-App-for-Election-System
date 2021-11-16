@@ -629,6 +629,25 @@ string Voter::promptVoterName()
 	}
 	return name;
 }
+
+//This function is for the user to input their division in the form of string
+string Voter:: promptDivision() {
+	string division;
+	bool valid = false;
+
+	while (!valid) {
+		cout << endl << "Division:" << endl;
+		getline(cin, division);
+		if (division == "1" || division == "2" || division == "3" || division == "4") {
+			valid = true;
+		}
+		else {
+			cout << "Please enter the correct division (1~4)." << endl;
+		}
+	}
+	return division;
+}
+
 //This function is to check if the voter's name is already exists in the database
 bool Voter::validateVoterName(string name) {
 	vector<string> voterDetails = readVoteFile();
