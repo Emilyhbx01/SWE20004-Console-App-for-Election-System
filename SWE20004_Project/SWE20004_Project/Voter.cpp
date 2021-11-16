@@ -633,7 +633,7 @@ string Voter::promptVoterName()
 
 //This function is for the user to input their age to check eligibilty for voting
 int Voter:: promptVoterAge() {
-	int age;
+	int age{};
 	bool valid = false;
 
 	while (!valid) {
