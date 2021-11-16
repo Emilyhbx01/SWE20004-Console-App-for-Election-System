@@ -46,18 +46,3 @@ void quit() {
 
 
 
-void registerVoter() {
-	string name, age, voterID;
-	int division, status;
-	int count = 0;
-	bool validVoterName;
-
-	cout << endl << "Welcome!" << endl;
-	cout << "This section is for voter registration." << endl;
-	cout << "Please fill each field correctly." << endl;
-	cout << endl;
-
-}
-
-
-
