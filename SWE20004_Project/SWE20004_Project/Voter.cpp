@@ -668,7 +668,7 @@ string Voter:: promptDivision() {
 }
 //This function generate the random 2 digit behind voter ID
 //and read the voter file to determine the next ID
-int generateVoterIdNo() {
+int Voter:: generateVoterIdNo() {
 	string inputFilename = "voter.txt";
 	ifstream inputStream;
 	int noOfLines = 0;
@@ -687,7 +687,7 @@ int generateVoterIdNo() {
 }
 
 //This function generate the full voter ID
-string generateVoterID(int& voterIdNo, string& name) {
+string Voter:: generateVoterID(int& voterIdNo, string& name) {
 	string voterID;
 
 	//to ensure the number behind the ID is 2 digit by adding a 0 if there is only 1 digit
@@ -699,6 +699,23 @@ string generateVoterID(int& voterIdNo, string& name) {
 	}
 	return voterID;
 }
+
+//This function is to convert the voters'information into .txt file storing into database
+void inputToFile(string& voterID, string& name, string& age, int& division, int& staus) {
+	string outputFilename = "voter.txt";
+	string voterDetails = voterID + "," + name + "," + age + "," + to_string(division) + "," + to_string(staus);
+	ofstream outputStream;
+	outputStream.open(outputFilename, ofstream::app);
+
+	if (outputStream.is_open()) {
+		outputStream << voterDetails << endl;
+	}
+	else {
+		cerr << "File cannot be opened" << endl;
+	}
+	outputStream.close();
+}
+
 
 //This function is to check if the voter's name is already exists in the database
 bool Voter::validateVoterName(string name) {
