@@ -666,6 +666,25 @@ string Voter:: promptDivision() {
 	}
 	return division;
 }
+
+//This function is for the user to input voter's status in the form of string
+string Voter:: promptStatus() {
+	string status;
+	bool valid = false;
+
+	while (!valid) {
+		cout << endl << "Voter Status:" << endl;
+		getline(cin, status);
+		if (status == "N" || status == "Y" )  {
+			valid = true;
+		}
+		else {
+			cout << "Invalid input" << endl;
+		}
+	}
+	return status;
+}
+
 //This function generate the random 2 digit behind voter ID
 //and read the voter file to determine the next ID
 int Voter:: generateVoterIdNo() {
