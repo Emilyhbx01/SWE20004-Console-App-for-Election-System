@@ -53,6 +53,7 @@ class Voter {
 		string promptVoterName();
 		bool validateVoterName(string name);
 	        int promptVoterAge();
+	        string promptStatus();
 		int generateVoterIdNo();
 		void quit();
 };
