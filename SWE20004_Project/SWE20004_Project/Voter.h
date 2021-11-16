@@ -52,5 +52,7 @@ class Voter {
 		void registerVoter();
 		string promptVoterName();
 		bool validateVoterName(string name);
+	        int promptVoterAge();
+		int generateVoterIdNo();
 		void quit();
 };
