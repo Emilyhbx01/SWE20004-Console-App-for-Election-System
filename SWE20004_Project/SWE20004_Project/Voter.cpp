@@ -605,6 +605,7 @@ vector<string> readVoteFile() {
 }
 	
 
+//This function is for the user to input their name in the form of string
 string Voter::promptVoterName() 
 {
 	string name;
