@@ -700,10 +700,10 @@ string Voter:: generateVoterID(int& voterIdNo, string& name) {
 	return voterID;
 }
 
-//This function is to convert the voters'information into .txt file storing into database
-void inputToFile(string& voterID, string& name, string& age, int& division, int& staus) {
+//This function is to convert the candidates information into .txt file storing into database
+void inputToFile(string& voterID, string& name, string& status, int& division, int& age) {
 	string outputFilename = "voter.txt";
-	string voterDetails = voterID + "," + name + "," + age + "," + to_string(division) + "," + to_string(staus);
+	string voterDetails = voterID + "," + name + "," + status + "," + to_string(division) + "," + to_string(age);
 	ofstream outputStream;
 	outputStream.open(outputFilename, ofstream::app);
 
@@ -715,7 +715,6 @@ void inputToFile(string& voterID, string& name, string& age, int& division, int&
 	}
 	outputStream.close();
 }
-
 
 //This function is to check if the voter's name is already exists in the database
 bool Voter::validateVoterName(string name) {
