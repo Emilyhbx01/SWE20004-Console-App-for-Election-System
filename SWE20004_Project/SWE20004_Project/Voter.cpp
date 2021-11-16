@@ -578,14 +578,8 @@ void Voter::registerVoter() {
 	cout << "Please fill each field correctly." << endl;
 	cout << endl;
 }
-/*
-        name = promptVoterName();
-	age = promptVoterAge();
-	division = stoi(promptDivision());
-	voterIdNo = generateVoterIdNo();
-	voterID = generateVoterID(voterIdNo,name);git 
-	inputToFile(voterID, name, age, division, status);
-}*/
+
+
 
 vector<string> readVoteFile() {
 	ifstream inputStream;
