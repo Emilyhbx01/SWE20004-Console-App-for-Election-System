@@ -648,6 +648,25 @@ string Voter:: promptDivision() {
 	}
 	return division;
 }
+//This function generate the random 2 digit behind voter ID
+//and read the voter file to determine the next ID
+int generateVoterIdNo() {
+	string inputFilename = "voter.txt";
+	ifstream inputStream;
+	int noOfLines = 0;
+	int newVoterNo;
+	inputStream.open(inputFilename, ifstream::in);
+
+	if (inputStream.is_open()) {
+		string str;
+		while (getline(inputStream, str)) {
+			noOfLines += 1;
+		}
+	}
+	inputStream.close();
+	newVoterNo = noOfLines + 1;
+	return newVoterNo;
+}
 
 //This function is to check if the voter's name is already exists in the database
 bool Voter::validateVoterName(string name) {
