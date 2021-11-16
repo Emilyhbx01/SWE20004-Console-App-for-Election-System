@@ -631,6 +631,24 @@ string Voter::promptVoterName()
 	return name;
 }
 
+//This function is for the user to input their age to check eligibilty for voting
+int Voter:: promptVoterAge() {
+	int age;
+	bool valid = false;
+
+	while (!valid) {
+		cout << endl << "Enter Voter's Age:" << endl;
+		
+		if (age >= 19) {
+			valid = true;
+		}
+		else {
+			cout << " You are not eligible for voting" << endl;
+		}
+	}
+	return age;
+}
+
 //This function is for the user to input their division in the form of string
 string Voter:: promptDivision() {
 	string division;
