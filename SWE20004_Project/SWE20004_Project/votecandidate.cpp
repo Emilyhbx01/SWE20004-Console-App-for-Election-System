@@ -9,7 +9,6 @@ Program Description: This program is a voting system that consists of 2 database
 
 #include "votecandidate.h"
 #include <string>
-#include <fstream>
 
 //Displaying the menu options instructions.
 void displayVoteMenu() {
@@ -26,7 +25,7 @@ string promptVoteChoice() {
 	bool valid = false;
 
 	while (!valid) {
-		cout << endl << "Enter your choice:\n";
+		cout << endl << "Enter your choice:" << endl;
 		getline(cin, choice);
 		if (choice == "1" || choice == "2" || choice == "3" || choice == "4" || choice == "5") {
 			valid = true;
@@ -39,9 +38,6 @@ string promptVoteChoice() {
 	return choice;
 }
 
-void quit() {
-	cout << "Thank you for using this program. Goodbye!" << endl;
-}
 
 
 

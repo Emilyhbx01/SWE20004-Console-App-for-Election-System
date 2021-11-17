@@ -2,8 +2,8 @@ Pak01,Emily Hong,Pakatan,1,10
 Pak02,Monica Bing,Pakatan,2,7
 Pak03,Phoebe Lee,Pakatan,3,5
 Pak04,Joey Ting,Pakatan,4,7
-All05,Lily Aldrin,Alliance,1,7
-All06,Ted Mosby,Alliance ,2,10
+All05,Lily Aldrin,Alliance,1,8
+All06,Ted Mosby,Alliance ,2,11
 All07,Barry Lee,Alliance,3,0
 All08,Selena Vema,Alliance,4,0
 Har09,Neil Boon,Harapan,1,2

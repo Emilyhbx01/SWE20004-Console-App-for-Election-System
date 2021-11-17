@@ -2,3 +2,5 @@ TingKingEik,Ting King Eik,20,3,Y
 NathanLauTingHeng,Nathan Lau Ting Heng,22,4,Y
 VoonBoonLok,Voon Boon Lok,56,2,Y
 TongChinYong,Tong Chin Yong,67,2,Y
+BoonWenChin,Boon Wen Chin,87,1,Y
+AdamWong,Adam Wong,30,2,Y

@@ -100,8 +100,8 @@ void Voter::viewVoteResult() {
 	cout << "View Vote Results" << endl;
 	cout << "------------------" << endl;
 
-	if (getVoters().empty()) {
-		cout << "No voters yet. Please try again later" << endl << endl;
+	if (getCandidates().empty()) {
+		cout << "No candidates yet. Please try again later" << endl << endl;
 	}
 	else {
 		string choice;
@@ -153,13 +153,56 @@ void Voter::findCandidate(vector<Candidate> candidates, int totalVotes, int vote
 	}
 }
 
-//Summarise voting result for all divisions
-void Voter::summariseAllVoteResult(string divisionPhrase, vector<Candidate> candidates, int totalVotes, int maxVote, int minVote) {
+//Summarise voting result for certain divisions
+void Voter::summariseDivisionVoteResult(string divisionPhrase, vector<Candidate> candidates, int totalVotes, int maxVote, int minVote) {
 	cout << endl << "Total vote for " << divisionPhrase << ":" << endl << totalVotes << endl;
 	cout << endl << "Candidates with highest vote" << ":" << endl;
 	findCandidate(candidates, totalVotes, maxVote);
 	cout << endl << "Candidates with lowest vote" << ":" << endl;
 	findCandidate(candidates, totalVotes, minVote);
+	
+	
+}
+
+//Summarise voting result for all divisions
+void Voter::summariseAllVoteResult(int totalVotes) {
+	cout << endl << "Total vote for all division:" << endl << totalVotes << endl;
+	int div = 1;
+	while (div <= 4) 
+	{
+		vector<Candidate> divisionCandidates = getCandidatesByDivision(div);
+		cout << "---------" << "--" << endl;
+		cout << "Division " << div << endl;
+		cout << "---------" << "--" << endl;
+
+		if (divisionCandidates.empty()) {
+			cout << "No candidates in division " << div <<"..." << endl << endl;
+		}
+		else {
+			int minVote = divisionCandidates[0].getVotes();
+			int maxVote = 0;
+			int totalDivisionVotes = 0;
+			for (Candidate candidate : divisionCandidates) {
+			
+				int candidateVote = candidate.getVotes();
+				totalDivisionVotes += candidateVote;
+
+				if (candidateVote < minVote) {
+					minVote = candidateVote;
+				}
+				if (candidateVote > maxVote) {
+					maxVote = candidateVote;
+				}
+			}
+			cout << endl << "Total votes:" << endl << totalDivisionVotes << endl;
+			cout << endl << "Candidates with highest vote" << ":" << endl;
+			findCandidate(divisionCandidates, totalDivisionVotes,maxVote);
+			cout << endl << "Candidates with lowest vote" << ":" << endl;
+			findCandidate(divisionCandidates, totalDivisionVotes, minVote);
+		}
+		div++;
+		
+	}
 }
 
 
@@ -188,27 +231,30 @@ void Voter::viewAllVoteResult() {
 			maxVote = candidateVote;
 		}
 	}
-	summariseAllVoteResult("all divisions", candidates, totalVotes, maxVote, minVote);
+	summariseAllVoteResult(totalVotes);
 }
 
 //Display voting result for certain division
 void Voter::viewDivisionVoteResult() {
-	int totalVotes = 0;
+	
 	vector<Candidate> candidates = getCandidates();
 	vector<Candidate> divisionCandidates;
+	int totalVotes = 0;
 	int minVote = candidates[0].getVotes();
 	int maxVote = 0;
 	int division = promptDivision();
-	cout << endl << "------------------------------" << endl;
+	cout << "------------------------------" << endl;
 	cout << "View Vote Results By Division" << endl;
 	cout << "------------------------------" << endl;
 
-	cout << endl << "ID\t" << "Candidate Name\t" << "Votes" << endl;
-	for (Candidate candidate : candidates) {
-		if (candidate.getDivision() == division) {
+	divisionCandidates = getCandidatesByDivision(division);
+	if (divisionCandidates.empty()) {
+		cout << "No candidates in this division..." << endl << endl;
+	}
+	else {
+		cout << endl << "ID\t" << "Candidate Name\t" << "Votes" << endl;
+		for (Candidate candidate : divisionCandidates) {
 			int candidateVote = candidate.getVotes();
-			divisionCandidates.insert(divisionCandidates.end(), { candidate.getCandidateId(),candidate.getName() ,candidate.getParty(),candidate.getDivision(),candidateVote });
-			cout << candidate.getCandidateId() << "\t" << candidate.getName() << "\t" << candidateVote << "\t" << endl;
 			totalVotes += candidateVote;
 
 			if (candidateVote < minVote) {
@@ -217,11 +263,27 @@ void Voter::viewDivisionVoteResult() {
 			if (candidateVote > maxVote) {
 				maxVote = candidateVote;
 			}
+			cout << candidate.getCandidateId() << "\t" << candidate.getName() << "\t" << candidateVote << "\t" << endl;
 		}
+		summariseDivisionVoteResult("division " + to_string(division), divisionCandidates, totalVotes, maxVote, minVote);
+			
 	}
-	summariseAllVoteResult("division " + to_string(division), divisionCandidates, totalVotes, maxVote, minVote);
+
+	
+	
 }
 
+//Get all the candidates in a certain division
+vector<Candidate> Voter::getCandidatesByDivision(int division) {
+	vector<Candidate> candidates = getCandidates();
+	vector<Candidate> divisionCandidates = {};
+	for (Candidate candidate : candidates) {
+		if (candidate.getDivision() == division) {
+			divisionCandidates.insert(divisionCandidates.end(), { candidate.getCandidateId(),candidate.getName() ,candidate.getParty(),candidate.getDivision(),candidate.getVotes() });
+		}
+	}
+	return divisionCandidates;
+}
 //Print candidate details for view candidates
 void Voter::printCandidatesDetails(Candidate candidate) {
 	cout << "CandidateID:" << candidate.getCandidateId() << endl;
@@ -234,33 +296,40 @@ void Voter::printCandidatesDetails(Candidate candidate) {
 //Menu options for view candidates details in all division or by specific division or party
 void Voter::viewCandidatesOptions() {
 	string choice;
-	bool valid = false;
 	cout << endl << "----------------" << endl;
 	cout << "View Candidates" << endl;
 	cout << "----------------" << endl;
-	cout << "1) View candidates in all divisions" << endl;
-	cout << "2) View candidates in specific divisions" << endl;
-	cout << "3) View candidates in specific party" << endl;
-	while (!valid) {
-		cout << "Enter your choice:" << endl;
-		getline(cin, choice);
 
-		if (choice == "1") {
-			viewCandidates();
-			valid = true;
-		}
-		else if (choice == "2") {
-			viewCandidatesDivision();
-			valid = true;
-		}
-		else if (choice == "3") {
-			viewCandidatesParty();
-			valid = true;
-		}
-		else {
-			cout << "Invalid selection, please try again" << endl;
+	if (getCandidates().empty()) {
+		cout << "No candidates yet. Please try again later" << endl << endl;
+	}
+	else{
+		cout << "1) View candidates in all divisions" << endl;
+		cout << "2) View candidates in specific divisions" << endl;
+		cout << "3) View candidates in specific party" << endl;
+		bool valid = false;
+		while (!valid) {
+			cout << "Enter your choice:" << endl;
+			getline(cin, choice);
+
+			if (choice == "1") {
+				viewCandidates();
+				valid = true;
+			}
+			else if (choice == "2") {
+				viewCandidatesDivision();
+				valid = true;
+			}
+			else if (choice == "3") {
+				viewCandidatesParty();
+				valid = true;
+			}
+			else {
+				cout << "Invalid selection, please try again" << endl;
+			}
 		}
 	}
+	
 }
 
 //View all candidates in all division
@@ -400,7 +469,7 @@ void Voter::vote() {
 									getline(cin, confirm);
 
 									if (confirm == "Y" || confirm == "y") {
-										changeValues(c, myVoter);
+										updateDatabase(c, myVoter);
 
 										//Provide voting feedback to the voter
 										cout << "\nThank you for voting " + myVoter.getName() + "." << endl;
@@ -445,7 +514,7 @@ void Voter::vote() {
 }
 
 //Increases the vote count for the candidate and the voters voting status in their respective text files
-void Voter::changeValues(Candidate candidate, Voter voter) {
+void Voter::updateDatabase(Candidate candidate, Voter voter) {
 	vector<Candidate> candidates = getCandidates();
 	vector<Voter> voters = getVoters();
 	ofstream outputStream;
