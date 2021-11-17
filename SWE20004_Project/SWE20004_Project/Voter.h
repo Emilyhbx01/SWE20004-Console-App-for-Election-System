@@ -23,7 +23,7 @@ class Voter {
 		int division;
 		char status;
 		vector<Candidate> getCandidates();
-		string promptSearchDivision();
+		vector<Voter> getVoters();
 		void printCandidateSummary(string candidateID, string name, string party, int vote, double percentage);
 		void findCandidate(vector<Candidate> candidates, int totalVotes, int vote);
 		void summariseAllVoteResult(string divisionPhrase, vector<Candidate> candidates, int totalVotes, int maxVote, int minVote);
@@ -34,7 +34,12 @@ class Voter {
 		void viewCandidatesDivision();
 		void viewCandidatesParty();
 		string verifyVoter();
-		vector<Voter> getVoters();
+		string promptVoterName();
+		bool validateVoterName(string name);
+		int promptVoterAge();
+		int promptDivision();
+		string generateVoterID(string name);
+		void inputToFile(string& voterID, string& name, char& status, int& division, int& age);
 
 	public:
 		Voter(string id, string voterName, int voterAge, int div, char voteStatus);
@@ -50,10 +55,5 @@ class Voter {
 		void vote();
 		void changeValues(Candidate, Voter);
 		void registerVoter();
-		string promptVoterName();
-		bool validateVoterName(string name);
-	        int promptVoterAge();
-	        string promptStatus();
-		int generateVoterIdNo();
 		void quit();
 };

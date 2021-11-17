@@ -24,19 +24,19 @@ int main() {
 		Voter voter;
 
 		if (voteChoice == "1") {
-			voter.viewCandidatesOptions(); //Menu option 1 that is to view candidates
+			voter.viewCandidatesOptions();	//Menu option 1 that is to view candidates
 		}								   	
 		else if (voteChoice == "2") {	   
-			voter.registerVoter();			   //Menu option 2 that is to register voters
+			voter.registerVoter();			//Menu option 2 that is to register voters
 		}								   								  
 		else if (voteChoice == "3") {	   
-			voter.vote();				   //Menu option 3 that is to vote
+			voter.vote();					//Menu option 3 that is to vote
 		}								   
 		else if (voteChoice == "4") {	   
-			voter.viewVoteResult();		   //Menu option 4 is to view the result of the voting
+			voter.viewVoteResult();			//Menu option 4 is to view the result of the voting
 		}								   
 		else if (voteChoice == "5") {	   
-			voter.quit();						   //Menu option 5 is to quit the program
+			voter.quit();					//Menu option 5 is to quit the program
 			run = false;
 			return 1;
 		}

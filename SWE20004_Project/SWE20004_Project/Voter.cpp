@@ -93,48 +93,39 @@ vector<Candidate> Voter::getCandidates() {
 	return candidates;
 }
 
-//User input validation for the view vote results by division
-//This part ensure that the user input for division is valid which is input of 1 to 4
-//Other input will be considered invalid by printing a message to inform of the invalid input
-string Voter::promptSearchDivision() {
-	bool valid = false;
-	string searchDivision;
-
-	while (!valid) {
-		cout << "Division:" << endl;
-		getline(cin, searchDivision);
-		if (searchDivision == "1" || searchDivision == "2" || searchDivision == "3" || searchDivision == "4") {
-			valid = true;
-		}
-		else {
-			cout << "Invalid division, please try again" << endl;
-		}
-	}
-	return searchDivision;
-}
-
 //This function is the menu options for the view vote results where user can choose to view the result by specific division or all division
 void Voter::viewVoteResult() {
-	string choice;
-	bool valid = false;
-	cout << endl << "1) View voting result of a division" << endl;
-	cout << "2) View voting result of all divisions" << endl;
-	while (!valid) {
-		cout << "Enter your choice:" << endl;
-		getline(cin, choice);
 
-		if (choice == "1") {
-			viewDivisionVoteResult();
-			valid = true;
-		}
-		else if (choice == "2") {
-			viewAllVoteResult();
-			valid = true;
-		}
-		else {
-			cout << "Invalid selection, please try again" << endl;
+	cout << endl << "------------------" << endl;
+	cout << "View Vote Results" << endl;
+	cout << "------------------" << endl;
+
+	if (getVoters().empty()) {
+		cout << "No voters yet. Please try again later" << endl << endl;
+	}
+	else {
+		string choice;
+		bool valid = false;
+		cout << "1) View voting result of a division" << endl;
+		cout << "2) View voting result of all divisions" << endl;
+		while (!valid) {
+			cout << "Enter your choice:" << endl;
+			getline(cin, choice);
+
+			if (choice == "1") {
+				viewDivisionVoteResult();
+				valid = true;
+			}
+			else if (choice == "2") {
+				viewAllVoteResult();
+				valid = true;
+			}
+			else {
+				cout << "Invalid selection, please try again" << endl;
+			}
 		}
 	}
+	
 }
 
 //Displaying candidate detail for the view vote result
@@ -155,7 +146,7 @@ void Voter::findCandidate(vector<Candidate> candidates, int totalVotes, int vote
 		if (candidateVote == vote) {
 			double percentageVote = 0.0;
 			if (totalVotes > 0) {
-				percentageVote = (double(candidateVote) / (double)totalVotes) * 100;;
+				percentageVote = ((double)candidateVote / (double)totalVotes) * 100;;
 			}
 			printCandidateSummary(candidate.getCandidateId(), candidate.getName(), candidate.getParty(), candidate.getVotes(), percentageVote);
 		}
@@ -207,7 +198,7 @@ void Voter::viewDivisionVoteResult() {
 	vector<Candidate> divisionCandidates;
 	int minVote = candidates[0].getVotes();
 	int maxVote = 0;
-	int division = stoi(promptSearchDivision());
+	int division = promptDivision();
 	cout << endl << "------------------------------" << endl;
 	cout << "View Vote Results By Division" << endl;
 	cout << "------------------------------" << endl;
@@ -233,7 +224,7 @@ void Voter::viewDivisionVoteResult() {
 
 //Print candidate details for view candidates
 void Voter::printCandidatesDetails(Candidate candidate) {
-	cout << endl << "CandidateID:" << candidate.getCandidateId() << endl;
+	cout << "CandidateID:" << candidate.getCandidateId() << endl;
 	cout << "Name:" << candidate.getName() << endl;
 	cout << "Party:" << candidate.getParty() << endl;
 	cout << "Division:" << candidate.getDivision() << endl;
@@ -244,7 +235,10 @@ void Voter::printCandidatesDetails(Candidate candidate) {
 void Voter::viewCandidatesOptions() {
 	string choice;
 	bool valid = false;
-	cout << endl << "1) View candidates in all division." << endl;
+	cout << endl << "----------------" << endl;
+	cout << "View Candidates" << endl;
+	cout << "----------------" << endl;
+	cout << "1) View candidates in all divisions" << endl;
 	cout << "2) View candidates in specific divisions" << endl;
 	cout << "3) View candidates in specific party" << endl;
 	while (!valid) {
@@ -284,9 +278,6 @@ void Voter::viewCandidates() {
 	if (!found) {
 		cout << "No candidates available..." << endl << endl;
 	}
-	cout << endl;
-
-	
 }
 
 
@@ -294,7 +285,7 @@ void Voter::viewCandidates() {
 void Voter::viewCandidatesDivision() {
 	bool found = false;
 	vector<Candidate> candidates = getCandidates();
-	int searchDivision = stoi(promptSearchDivision());
+	int searchDivision = promptDivision();
 	cout << endl << "----------------------------" << endl;
 	cout << "View Candidates By Division" << endl;
 	cout << "----------------------------" << endl;
@@ -330,9 +321,9 @@ void Voter::viewCandidatesParty() {
 		if (candidateParty == searchParty) {
 			printCandidatesDetails(candidate);
 			found = true;
-
 		}
 	}
+
 
 	if (!found) {
 		cout << "No candidates available..." << endl << endl;
@@ -341,130 +332,139 @@ void Voter::viewCandidatesParty() {
 
 //Vote for candidates
 void Voter::vote() {
-	string voterID, candidateID, confirm;
-	Voter myVoter;
-	bool candidateExists = false;
-	
-	voterID = verifyVoter();
 
-	//Proceed when voter has been verified
-	if (voterID != "q") {
-		if (!voterID.empty()) {
-			//Get the voter
-			vector<Voter> voters = getVoters();
+	cout << endl << "---------------------" << endl;
+	cout << "Vote For A Candidate" << endl;
+	cout << "---------------------" << endl;
+	//Get the voter
+	vector<Voter> voters = getVoters();
 
-			for (Voter v : voters) {
-				string vID = v.getVoterId();
-				transform(vID.begin(), vID.end(), vID.begin(), [](unsigned char c) {return tolower(c); });
+	if (voters.empty()) {
+		cout << "No voters yet. Please try again later" << endl << endl;
+	}
+	else {
+		string voterID, candidateID, confirm;
+		Voter myVoter;
+		bool candidateExists = false;
+		voterID = verifyVoter();
 
-				if (vID == voterID)
-					myVoter = v;
-			}
+		//Proceed when voter has been verified
+		if (voterID != "q") {
+			if (!voterID.empty()) {
+				for (Voter v : voters) {
+					string vID = v.getVoterId();
+					transform(vID.begin(), vID.end(), vID.begin(), ::tolower);
 
-			//Display all the candidates in the voter's division
-			vector<Candidate> candidates = getCandidates();
-			cout << endl << "-----------------------------" << endl;
-			cout << "Candidates Available To Vote" << endl;
-			cout << "-----------------------------" << endl;
-			for (Candidate c : candidates) {
-				if (c.getDivision() == myVoter.getDivision())
-					printCandidatesDetails(c);
-			}
+					if (vID == voterID)
+						myVoter = v;
+				}
 
-			//Checks if the voter has already voted or not
-			if (myVoter.getStatus() == 'N') {
-				cout << endl << "--------------------" << endl;
-				cout << "Vote for a candidate" << endl;
-				cout << "--------------------" << endl;
-
-				while (true) {
-					bool loop = true;
-
-					cout << "\nEnter the candidate's ID (Q: Exit): ";
-					getline(cin, candidateID);
-
-					transform(candidateID.begin(), candidateID.end(), candidateID.begin(), [](unsigned char c) {return tolower(c); });
-
-					//Exits the voting section
-					if (candidateID == "Q" || candidateID == "q") {
-						break;
+				//Display all the candidates in the voter's division
+				vector<Candidate> candidates = getCandidates();
+				cout << endl << "-----------------------------" << endl;
+				cout << "Candidates Available To Vote" << endl;
+				cout << "-----------------------------" << endl;
+				for (Candidate c : candidates) {
+					if (c.getDivision() == myVoter.getDivision()) {
+						cout << "CandidateID:" << c.getCandidateId() << endl;
+						cout << "Name:" << c.getName() << endl;
+						cout << "Party:" << c.getParty() << endl << endl;
 					}
 
-					//Checks if the candidate ID is valid and in the same division as the voter
-					for (Candidate c : candidates) {
-						string id = c.getCandidateId();
-						transform(id.begin(), id.end(), id.begin(), [](unsigned char c) {return tolower(c); });
+				}
 
-						if (candidateID == id && c.getDivision() == myVoter.getDivision()) {
-							//Gets the voters confirmation on their vote
-							while (true) {
-								cout << "Are you sure (Y/N): ";
-								getline(cin, confirm);
+				//Checks if the voter has already voted or not
+				if (myVoter.getStatus() == 'N') {
 
-								if (confirm == "Y" || confirm == "y") {
-									changeValues(c, myVoter);
+					while (true) {
+						bool loop = true;
 
-									//Provide voting feedback to the voter
-									cout << "\nThank you for voting " + myVoter.getName() + "." << endl;
-									cout << "You have successfully voted for " + c.getCandidateId() + " " + c.getName() + ".\n" << endl;
+						cout << "\nEnter the candidate's ID (Q: Exit):" << endl;
+						getline(cin, candidateID);
+						transform(candidateID.begin(), candidateID.end(), candidateID.begin(), ::tolower);
 
-									loop = false;
-
-									break;
-								}
-								else if (confirm == "N" || confirm == "n") {
-									break;
-								}
-								else {
-									cout << "Invalid selection, please try again." << endl;
-								}
-							}
-
-							candidateExists = true;
+						//Exits the voting section
+						if (candidateID == "Q" || candidateID == "q") {
 							break;
 						}
-					}
 
-					//Breaks the loop once the vote succeeds
-					if (loop == false)
-						break;
+						//Checks if the candidate ID is valid and in the same division as the voter
+						for (Candidate c : candidates) {
+							string id = c.getCandidateId();
+							transform(id.begin(), id.end(), id.begin(), ::tolower);
 
-					//Displays an error message if the candidate could not be found
-					if (candidateExists == false) {
-						cout << "The candidate could not be found. Please try again." << endl;
+							if (candidateID == id && c.getDivision() == myVoter.getDivision()) {
+								//Gets the voters confirmation on their vote
+								while (true) {
+									cout << "Are you sure (Y/N): ";
+									getline(cin, confirm);
+
+									if (confirm == "Y" || confirm == "y") {
+										changeValues(c, myVoter);
+
+										//Provide voting feedback to the voter
+										cout << "\nThank you for voting " + myVoter.getName() + "." << endl;
+										cout << "You have successfully voted for " + c.getCandidateId() + " " + c.getName() + ".\n" << endl;
+
+										loop = false;
+
+										break;
+									}
+									else if (confirm == "N" || confirm == "n") {
+										break;
+									}
+									else {
+										cout << "Invalid selection, please try again." << endl;
+									}
+								}
+
+								candidateExists = true;
+								break;
+							}
+						}
+
+						//Breaks the loop once the vote succeeds
+						if (loop == false)
+							break;
+
+						//Displays an error message if the candidate could not be found
+						if (candidateExists == false) {
+							cout << "The candidate could not be found. Please try again." << endl;
+						}
 					}
+				}
+				else {
+					cout << "You have already voted..." << endl << endl;
 				}
 			}
 			else {
-				cout << "You have already voted\n" << endl;
+				cout << "Login failed." << endl;
 			}
-		}
-		else {
-			cout << "Login failed." << endl;
 		}
 	}
 }
 
 //Increases the vote count for the candidate and the voters voting status in their respective text files
 void Voter::changeValues(Candidate candidate, Voter voter) {
-	vector<Candidate> candidates = getCandidates(), newCandidates = {};
-	vector<Voter> voters = getVoters(), newVoters = {};
-
+	vector<Candidate> candidates = getCandidates();
+	vector<Voter> voters = getVoters();
 	ofstream outputStream;
 
-	outputStream.open("candidate.txt", ios::out);
+	outputStream.open("candidate.txt", ofstream::out);
 
 	//Increases the vote count of the candidate in the candidate text file
 	if (outputStream.is_open()) {
-		for (Candidate c : candidates) {
-			if (candidate.getCandidateId() == c.getCandidateId())
+		for (int i = 0; i < candidates.size(); i++) {
+			if (candidates[i].getCandidateId() == candidate.getCandidateId())
 			{
-				c.setVotes(c.getVotes() + 1);
+				Candidate updatedCandidate = candidates[i];
+				updatedCandidate.setVotes(updatedCandidate.getVotes() + 1);
+				candidates[i] = updatedCandidate;
+				break;
 			}
-			newCandidates.push_back(c);
 		}
 
-		for (Candidate c : newCandidates) {
+		for (Candidate c : candidates) {
 			outputStream << c.getCandidateId() + "," + c.getName() + "," << c.getParty() + "," + to_string(c.getDivision()) + "," + to_string(c.getVotes()) << endl;
 		}
 		
@@ -474,20 +474,23 @@ void Voter::changeValues(Candidate candidate, Voter voter) {
 	}
 
 	outputStream.close();
-	outputStream.open("voter.txt", ios::out);
+	outputStream.open("voter.txt", ofstream::out);
 
 	//Sets the voters voting status to voted in the voter text file
 	if (outputStream.is_open()) {
-		for (Voter v : voters) {
-			if (voter.getVoterId() == v.getVoterId()) {
-				v.setStatus('Y');
-
-			newVoters.push_back(v);
+		for (int i = 0; i < voters.size(); i++) {
+			if (voters[i].getVoterId() == voter.getVoterId()) {
+				Voter updatedVoter = voters[i];
+				updatedVoter.setStatus('Y');
+				voters[i] = updatedVoter;
+				break;
 			}
 		}
 
-		for (Voter v : newVoters)
+		for (Voter v : voters) {
 			outputStream << v.getVoterId() << "," << v.getName() << "," << v.getAge() << "," << v.getDivision() << "," << v.getStatus() << endl;
+		}
+		
 	}
 	else {
 		cout << "Error: The voter text file could not be opened." << endl;
@@ -503,10 +506,9 @@ string Voter::verifyVoter() {
 	bool idExists = false;
 
 	while (true) {
-		cout << "\nVoter ID (Q: Exit): ";
+		cout << endl << "Voter ID (Q: Exit): " << endl;
 		getline(cin, id);
-
-		transform(id.begin(), id.end(), id.begin(), [](unsigned char c) {return tolower(c); });
+		transform(id.begin(), id.end(), id.begin(), ::tolower);
 
 		//Exits the function
 		if (id == "q")
@@ -516,7 +518,7 @@ string Voter::verifyVoter() {
 
 		for (Voter v : voters) {
 			string voterID = v.getVoterId();
-			transform(voterID.begin(), voterID.end(), voterID.begin(), [](unsigned char c) {return tolower(c); });
+			transform(voterID.begin(), voterID.end(), voterID.begin(), ::tolower);
 			
 			if (voterID == id) {
 				myVoter = v;
@@ -570,40 +572,40 @@ vector<Voter> Voter::getVoters() {
 //This function is the menu options for the register voters 
 void Voter::registerVoter() {
 
-	string name, age, voterID;
-	int division, status;
-	int count = 0;
-	bool validVoterName;
-
-	cout << endl << "Welcome!" << endl;
+	string name,voterID;
+	int division, age;
+	char status;
+	cout << endl << "--------------------" << endl;
+	cout << "Register As A Voter" << endl;
+	cout << "--------------------" << endl;
+	cout << "Welcome!" << endl;
 	cout << "This section is for voter registration." << endl;
 	cout << "Please fill each field correctly." << endl;
 	cout << endl;
-}
 
+	name = promptVoterName();
+	bool nameExists = validateVoterName(name); // check if voter name already exists in text file
 
+	if (!nameExists) {
+		age = promptVoterAge();
 
-vector<string> readVoteFile() {
-	ifstream inputStream;
-	string fileLine = "";
-	vector<string> voterDetails;
-	inputStream.open("vote.txt", ifstream::in);
-
-	while (getline(inputStream, fileLine)) {
-		char fileLineArray[200];
-		strcpy_s(fileLineArray, fileLine.c_str());
-
-		//Split line by comma
-		char* remain = fileLineArray;
-		char* token;
-		while (token = strtok_s(remain, ",", &remain)) {
-			voterDetails.push_back(token);
+		if (age >= 19)
+		{
+			division = promptDivision();
+			status = 'N';
+			voterID = generateVoterID(name);
+			inputToFile(voterID, name, status, division, age);
+		}
+		else
+		{
+			cout << "You are not eligible to vote...Voter must be 19 years old and above" << endl << endl;
 		}
 	}
-	inputStream.close();
-	return voterDetails;
+	else {
+		cout << "Voter's name is already registered." << endl << endl;
+	}
+
 }
-	
 
 //This function is for the user to input their name in the form of string
 string Voter::promptVoterName() 
@@ -616,118 +618,82 @@ string Voter::promptVoterName()
 		getline(cin, name);
 		for (unsigned int i = 0; i < name.length(); i++) {
 			char letter = name[i];
-			if (!isalpha(letter) && (!isspace(letter))) {
-				cout << "Invalid input, please try again" << endl;
+
+			if (isalpha(letter) || isspace(letter)){
+				valid = true;
+			}
+			else{
+				cout << "Invalid input...Voter name can only have alphas" << endl;
 				valid = false;
 				break;
 			}
-			else if (isalpha(letter)) {
-
-				valid = validateVoterName(name);
-				break;
-			}
 		}
+
 	}
 	return name;
 }
 
 //This function is for the user to input their age to check eligibilty for voting
 int Voter:: promptVoterAge() {
-	int age{};
+	int age;
 	bool valid = false;
 
 	while (!valid) {
+		string ageString;
 		cout << endl << "Enter Voter's Age:" << endl;
-		
-		if (age >= 19) {
+		getline(cin, ageString);
+
+		try {
+			age = stoi(ageString);
 			valid = true;
 		}
-		else {
-			cout << " You are not eligible for voting" << endl;
+		catch (exception e) {
+			cout << "Invalid input...Please try again" << endl;
 		}
+
+		
 	}
 	return age;
 }
 
 //This function is for the user to input their division in the form of string
-string Voter:: promptDivision() {
-	string division;
+int Voter:: promptDivision() {
+	int division;
 	bool valid = false;
-
+	string divisionString;
 	while (!valid) {
+		
 		cout << endl << "Division:" << endl;
-		getline(cin, division);
-		if (division == "1" || division == "2" || division == "3" || division == "4") {
+		getline(cin, divisionString);
+		if (divisionString == "1" || divisionString == "2" || divisionString == "3" || divisionString == "4") {
+			division = stoi(divisionString);
 			valid = true;
 		}
 		else {
 			cout << "Please enter the correct division (1~4)." << endl;
 		}
 	}
+	cout << endl;
 	return division;
 }
 
-//This function is for the user to input voter's status in the form of string
-string Voter:: promptStatus() {
-	string status;
-	bool valid = false;
 
-	while (!valid) {
-		cout << endl << "Voter Status:" << endl;
-		getline(cin, status);
-		if (status == "N" || status == "Y" )  {
-			valid = true;
-		}
-		else {
-			cout << "Invalid input" << endl;
-		}
-	}
-	return status;
-}
-
-//This function generate the random 2 digit behind voter ID
-//and read the voter file to determine the next ID
-int Voter:: generateVoterIdNo() {
-	string inputFilename = "voter.txt";
-	ifstream inputStream;
-	int noOfLines = 0;
-	int newVoterNo;
-	inputStream.open(inputFilename, ifstream::in);
-
-	if (inputStream.is_open()) {
-		string str;
-		while (getline(inputStream, str)) {
-			noOfLines += 1;
-		}
-	}
-	inputStream.close();
-	newVoterNo = noOfLines + 1;
-	return newVoterNo;
-}
-
-//This function generate the full voter ID
-string Voter:: generateVoterID(int& voterIdNo, string& name) {
-	string voterID;
-
-	//to ensure the number behind the ID is 2 digit by adding a 0 if there is only 1 digit
-	if (to_string(voterIdNo).length() == 1) {
-		voterID = name.substr(0, 3) + "0" + to_string(voterIdNo);
-	}
-	else {
-		voterID = name.substr(0, 3) + to_string(voterIdNo);
-	}
-	return voterID;
+//This function generate the voter ID
+string Voter:: generateVoterID(string name) {
+	name.erase(remove(name.begin(), name.end(), ' '), name.end());
+	return name;
 }
 
 //This function is to convert the candidates information into .txt file storing into database
-void inputToFile(string& voterID, string& name, string& status, int& division, int& age) {
+void Voter::inputToFile(string& voterID, string& name, char& status, int& division, int& age) {
 	string outputFilename = "voter.txt";
-	string voterDetails = voterID + "," + name + "," + status + "," + to_string(division) + "," + to_string(age);
+	string voterDetails = voterID + "," + name + "," + to_string(age) + "," + to_string(division) + "," + status;
 	ofstream outputStream;
 	outputStream.open(outputFilename, ofstream::app);
 
 	if (outputStream.is_open()) {
 		outputStream << voterDetails << endl;
+		cout << "Successful registration..." << endl << endl;
 	}
 	else {
 		cerr << "File cannot be opened" << endl;
@@ -737,27 +703,23 @@ void inputToFile(string& voterID, string& name, string& status, int& division, i
 
 //This function is to check if the voter's name is already exists in the database
 bool Voter::validateVoterName(string name) {
-	vector<string> voterDetails = readVoteFile();
+	vector<Voter> voters = getVoters();
+
 	bool nameExists = false;
 	transform(name.begin(), name.end(), name.begin(), ::tolower);
+	
 
-	for (int i = 1; i < voterDetails.size(); i += 5) {
-		string detail = voterDetails[i];
-		transform(detail.begin(), detail.end(), detail.begin(), ::tolower);
-		if (detail == name) {
+	for (Voter voter:voters) {
+		string voterName = voter.getName();
+		transform(voterName.begin(), voterName.end(), voterName.begin(), ::tolower);
+		if (voterName == name) {
 			nameExists = true;
 			break;
 		}
 	}
 
-	// Returns a value based on whether the name exists
-	if (nameExists == true) {
-		cout << "Voter's name is already registered." << endl;
-		return false;
-	}
-	else {
-		return true;
-	}
+	return nameExists;
+	
 }
 
 
