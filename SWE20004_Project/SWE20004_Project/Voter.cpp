@@ -10,7 +10,11 @@ Program Description: This program is a voting system that consists of 2 database
 					 3) voting for candidates by voters.
 					 4) view vote results summary in all division or specific division.
 					 5) quiiting the program.	 
+					
+					In this program, there are 2 tables on top of every function to show the summary of the input, output and local variables used 
+					and test data.
 */
+
 
 #include "Voter.h"
 #include <fstream>
@@ -58,7 +62,21 @@ void Voter::setStatus(char voteStatus) {
 	status = voteStatus;
 }
 
-//Reading candidate text file
+/*
+>> Reading candidate text file
+Summary of input, output and local variables                          
+---------------------------------------------------------------------------  
+| Variables					      | Description                           |  
+---------------------------------------------------------------------------  
+| local: fileline				  | a text string to output the text file |   
+--------------------------------------------------------------------------- 
+| local: candidateDetails         | vector to get candidate details from  |   
+|								  | the file.			                  |	  
+---------------------------------------------------------------------------
+| local: candidates               | vector to get candidate details from  |
+|								  | class.						   	      |
+---------------------------------------------------------------------------
+*/
 vector<Candidate> Voter::getCandidates() {
 	ifstream inputStream;
 	string fileLine = "";
@@ -93,9 +111,27 @@ vector<Candidate> Voter::getCandidates() {
 	return candidates;
 }
 
-//This function is the menu options for the view vote results where user can choose to view the result by specific division or all division
+/*
+>>This function is the menu options for the view vote results where user can choose to view the result by specific division or all division
+Summary of input, output and local variables                          Test Data
+-------------------------------------------------------------------   --------------------------------------------------------------------------------------------------
+| Variables					      | Description                   |   | Menu Choice | Name         | ID         | Age  | Division  | Status | Description              |
+-------------------------------------------------------------------   --------------------------------------------------------------------------------------------------
+| input: choice					  | input either 1 or 2 to view   |   | 4, 1        | Walter Lee   | WalterLee  | 34   | 2         | Y      | View voting results by   |
+|								  | vote results a division or    |   |             |              |            |      |           |        | a division inputted.     |
+|					              | division.                     |   --------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------   | 4, 2        | Adam Wong    | AdamWong   |30    | 2         | Y		| View voting results in   |
+| output: viewDivisionVoteResult  | go to the function of	   	  |   |   			|			   |			|	   |		   |        | all division.			   |
+|								  | viewDivisionVoteResult        |	  --------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------
+| output: viewAllVoteResult	      | go to the function of         |
+|								  | viewAllVoteResult		      |
+-------------------------------------------------------------------
+| local: valid                    | boolean that is only true when|
+|                                 | the choice is 1 or 2          |
+-------------------------------------------------------------------
+*/
 void Voter::viewVoteResult() {
-
 	cout << endl << "------------------" << endl;
 	cout << "View Vote Results" << endl;
 	cout << "------------------" << endl;
@@ -138,7 +174,22 @@ void Voter::printCandidateSummary(string candidateID, string name, string party,
 	cout << "Percentage:" << percentage << "%" << endl << endl;
 }
 
-//Find all candidate with highest or lowest votes (may have more than 1 candidate)
+/*
+>>Find all candidate with highest or lowest votes (may have more than 1 candidate)
+Summary of input, output and local variables									 Equations:
+----------------------------------------------------------------------------	 1.  percentageVote = (candidateVote / totalVotes) * 100
+| Variables					      | Description							   | 
+----------------------------------------------------------------------------   
+| local: candidateVote			  | an integer that is the number of votes |  
+|								  | from the text file.					   |    
+----------------------------------------------------------------------------   
+| local: percentageVote           | a double that is 0.0 initial and will  |   
+|								  | be counting the votes in percentage.   |
+----------------------------------------------------------------------------
+| output: printCandidateSummary   | print the candidates details with      |
+|								  | percentage of votes.				   |
+----------------------------------------------------------------------------
+*/
 void Voter::findCandidate(vector<Candidate> candidates, int totalVotes, int vote) {
 
 	for (Candidate candidate : candidates) {
@@ -153,18 +204,53 @@ void Voter::findCandidate(vector<Candidate> candidates, int totalVotes, int vote
 	}
 }
 
-//Summarise voting result for certain divisions
+/*
+>>Summarise voting result for certain divisions
+Summary of input, output and local variables                      
+------------------------------------------------------------------------------------------------------------   
+| Variables				                        	      | Description					                   |   
+------------------------------------------------------------------------------------------------------------   
+| output: findCandidate(candidates, totalVotes, maxVote)  | find the candidate that has the maximum        |
+|														  | votes from total votes of all the candidates.  |  
+------------------------------------------------------------------------------------------------------------   
+| output: findCandidate(candidates, totalVotes, minVote)  | find the candidate that has the minimum        |   
+|														  | votes from total votes of all the candidates.  |	  
+------------------------------------------------------------------------------------------------------------
+*/
 void Voter::summariseDivisionVoteResult(string divisionPhrase, vector<Candidate> candidates, int totalVotes, int maxVote, int minVote) {
 	cout << endl << "Total vote for " << divisionPhrase << ":" << endl << totalVotes << endl;
 	cout << endl << "Candidates with highest vote" << ":" << endl;
 	findCandidate(candidates, totalVotes, maxVote);
 	cout << endl << "Candidates with lowest vote" << ":" << endl;
 	findCandidate(candidates, totalVotes, minVote);
-	
-	
 }
 
-//Summarise voting result for all divisions
+/*
+>>Summarise voting result for all divisions
+Summary of input, output and local variables
+------------------------------------------------------------------------------------ ------------------------------------------------------------------------------------------------------------
+| Variables			         | Description					                       | | Variables				                        	      | Description					                |   
+------------------------------------------------------------------------------------ ------------------------------------------------------------------------------------------------------------  
+| local: div                 | integer to represent the division where initially 1 | | output: findCandidate(candidates, totalVotes, maxVote)  | find the candidate that has the maximum        |
+|							 | for division 1 and loop for 4 times.                | |														   | votes from total votes of all the candidates.  | 
+------------------------------------------------------------------------------------ ------------------------------------------------------------------------------------------------------------ 
+| local: divisionCandidates  | getting candidates from particular division         | | output: findCandidate(candidates, totalVotes, minVote)  | find the candidate that has the minimum        |  
+|                            | according to div.								   | |												   		   | votes from total votes of all the candidates.  |
+------------------------------------------------------------------------------------ ------------------------------------------------------------------------------------------------------------
+| local: candidateVote       | getting candidates number of votes.			       |
+------------------------------------------------------------------------------------
+| local: minVote             | integer of initial value of 0 to compare with votes |
+|							 | from candidates and the value will be set to the    |
+|							 | number of votes from the candidates with the least. |
+------------------------------------------------------------------------------------
+| local: maxVote			 | integer of initial value of 0 to compare with votes |
+|							 | from candidates and the value will be set to the    |
+|							 | number of votes from the candidates with the most.  |
+------------------------------------------------------------------------------------
+| local: totalDivisionVotes  | integer to count the total votes from a division    |
+|							 | with initial value of 0.							   |
+------------------------------------------------------------------------------------
+*/
 void Voter::summariseAllVoteResult(int totalVotes) {
 	cout << endl << "Total vote for all division:" << endl << totalVotes << endl;
 	int div = 1;
@@ -201,12 +287,32 @@ void Voter::summariseAllVoteResult(int totalVotes) {
 			findCandidate(divisionCandidates, totalDivisionVotes, minVote);
 		}
 		div++;
-		
 	}
 }
 
-
-//Display voting result for all divisions
+/*
+>>Display voting result for all divisions
+Summary of input, output and local variables
+--------------------------------------------------------------------------------------------------------
+| Variables									     | Description					                       |
+--------------------------------------------------------------------------------------------------------
+| local: candidateVote						     | getting candidates number of votes.			       |
+--------------------------------------------------------------------------------------------------------
+| local: minVote						         | integer of initial value of 0 to compare with votes |
+|												 | from candidates and the value will be set to the    |
+|												 | number of votes from the candidates with the least. |
+--------------------------------------------------------------------------------------------------------
+| local: maxVote								 | integer of initial value of 0 to compare with votes |
+|												 | from candidates and the value will be set to the    |
+|												 | number of votes from the candidates with the most.  |
+--------------------------------------------------------------------------------------------------------
+| local: totalVotes								 | integer to count the total votes from every         |
+|												 | division with initial value of 0.		           |
+--------------------------------------------------------------------------------------------------------
+| output: summariseAllVoteResult(totalVotes)	 | summarise vote results in all division with total   |
+|												 | votes.											   |
+--------------------------------------------------------------------------------------------------------
+*/
 void Voter::viewAllVoteResult() {
 	vector<Candidate> candidates = getCandidates();
 	int totalVotes = 0;
@@ -217,7 +323,6 @@ void Voter::viewAllVoteResult() {
 	cout << "----------------------" << endl;
 
 	cout << endl << "ID\t" << "Candidate Name\t" << "Votes" << endl;
-
 
 	for (Candidate candidate : candidates) {
 		int candidateVote = candidate.getVotes();
@@ -234,9 +339,38 @@ void Voter::viewAllVoteResult() {
 	summariseAllVoteResult(totalVotes);
 }
 
-//Display voting result for certain division
+/*
+>>Display voting result for certain division
+Summary of input, output and local variables
+------------------------------------------------------------------------------------------------------------
+| Variables											 | Description					                       |
+------------------------------------------------------------------------------------------------------------
+| local: candidates									 | vector to get candidate details.					   |
+------------------------------------------------------------------------------------------------------------
+| local: divisionCandidates							 | getting candidates from particular division         |
+|													 | according to div.								   |
+------------------------------------------------------------------------------------------------------------
+| local: totalVotes								     | integer of initial value 0 and will be set to the   |
+|													 | total votes recieved from every candidates.         |
+------------------------------------------------------------------------------------------------------------
+| local: minVote								     | integer of initial value of 0 to compare with votes |
+|													 | from candidates and the value will be set to the    |
+|													 | number of votes from the candidates with the least. |
+------------------------------------------------------------------------------------------------------------
+| local: maxVote									 | integer of initial value of 0 to compare with votes |
+|													 | from candidates and the value will be set to the    |
+|													 | number of votes from the candidates with the most.  |
+------------------------------------------------------------------------------------------------------------
+| local: division									 | to prompt division in the form of integer.          |
+------------------------------------------------------------------------------------------------------------
+| local: candidateVotes								 | get number of votes from every candidate.		   |
+------------------------------------------------------------------------------------------------------------
+| output: summariseDivisionVoteResult(totalVotes)	 | summarise vote results in a division with		   |
+|											     	 | division, candidates, total votes, maximum and	   |
+|													 | minimum votes.									   |
+------------------------------------------------------------------------------------------------------------
+*/
 void Voter::viewDivisionVoteResult() {
-	
 	vector<Candidate> candidates = getCandidates();
 	vector<Candidate> divisionCandidates;
 	int totalVotes = 0;
@@ -251,6 +385,7 @@ void Voter::viewDivisionVoteResult() {
 	if (divisionCandidates.empty()) {
 		cout << "No candidates in this division..." << endl << endl;
 	}
+
 	else {
 		cout << endl << "ID\t" << "Candidate Name\t" << "Votes" << endl;
 		for (Candidate candidate : divisionCandidates) {
@@ -265,15 +400,25 @@ void Voter::viewDivisionVoteResult() {
 			}
 			cout << candidate.getCandidateId() << "\t" << candidate.getName() << "\t" << candidateVote << "\t" << endl;
 		}
-		summariseDivisionVoteResult("division " + to_string(division), divisionCandidates, totalVotes, maxVote, minVote);
-			
-	}
-
-	
-	
+		summariseDivisionVoteResult("division " + to_string(division), divisionCandidates, totalVotes, maxVote, minVote);	
+	}	
 }
 
-//Get all the candidates in a certain division
+
+/*
+>>Get all the candidates in a certain division
+Summary of input, output and local variables
+------------------------------------------------------------------------------------
+| Variables			         | Description					                       |
+------------------------------------------------------------------------------------
+| local: candidates          | vector to get candidate details.					   |
+------------------------------------------------------------------------------------
+| local: divisionCandidates  | getting candidates from particular division         |
+|                            | according to div.								   |
+------------------------------------------------------------------------------------
+| output: divisionCandidates | candidates by division is outputted				   |
+------------------------------------------------------------------------------------
+*/
 vector<Candidate> Voter::getCandidatesByDivision(int division) {
 	vector<Candidate> candidates = getCandidates();
 	vector<Candidate> divisionCandidates = {};
@@ -284,6 +429,7 @@ vector<Candidate> Voter::getCandidatesByDivision(int division) {
 	}
 	return divisionCandidates;
 }
+
 //Print candidate details for view candidates
 void Voter::printCandidatesDetails(Candidate candidate) {
 	cout << "CandidateID:" << candidate.getCandidateId() << endl;
@@ -293,7 +439,29 @@ void Voter::printCandidatesDetails(Candidate candidate) {
 	cout << "Votes:" << candidate.getVotes() << endl << endl;
 }
 
-//Menu options for view candidates details in all division or by specific division or party
+/*
+>>Menu options for view candidates details in all division or by specific division or party
+Summary of input, output and local variables                          Test Data
+-------------------------------------------------------------------   --------------------------------------------------------------------------------------------------
+| Variables					      | Description                   |   | Menu Choice | Name         | ID         | Age  | Division  | Status | Description              |
+-------------------------------------------------------------------   --------------------------------------------------------------------------------------------------
+| input: choice					  | input either 1 or 2 to view   |   | 1, 1        | Lin Yong     | LinYong    | 34   | 2         | Y      | View candidates in all   |
+|								  | vote results a division or    |   |             |              |            |      |           |        | division.                |
+|					              | division.                     |   --------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------   | 1, 2        | Fan Ying Li  | FanYingLi  | 23   | 3         | N   	| View candidates in a	   |
+| output: viewCandidates          | go to the function of	   	  |   |   			|			   |			|	   |		   |        | division inputted.	   |
+|								  | viewCandidates.               |	  --------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------   | 1, 3        | Brenda Wong  | BrendaWong | 45   | 1         | N		| View candidates in a     |
+| output: viewCandidatesDivision  | go to the function of         |   |   			|			   |			|	   |		   |        | party inputted.		   |
+|								  | viewCandidatesDivision.		  |   --------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------
+| output: viewCandidatesParty     | go to the function of         |
+|								  | viewCandidatesParty.		  |
+-------------------------------------------------------------------
+| local: valid                    | boolean that is only true when|
+|                                 | the choice is 1 or 2          |
+-------------------------------------------------------------------
+*/
 void Voter::viewCandidatesOptions() {
 	string choice;
 	cout << endl << "----------------" << endl;
@@ -329,10 +497,22 @@ void Voter::viewCandidatesOptions() {
 			}
 		}
 	}
-	
 }
 
-//View all candidates in all division
+/*
+>>View all candidates in all division
+Summary of input, output and local variables
+---------------------------------------------------------------------------------------------------
+| Variables								    | Description					                      |
+---------------------------------------------------------------------------------------------------
+| local: found							    | boolean that is only true if the candidate file is  |
+|										    | found.                                              |
+---------------------------------------------------------------------------------------------------
+| local: candidates						    | getting every candidate from every division.        |
+---------------------------------------------------------------------------------------------------
+| output: printCandidatesDetails(candidate) | every candidates is outputted.					  |
+---------------------------------------------------------------------------------------------------
+*/
 void Voter::viewCandidates() {
 	bool found = false;
 	cout << endl << "--------------------" << endl;
@@ -350,7 +530,23 @@ void Voter::viewCandidates() {
 }
 
 
-//View candidate by specific division
+/*
+>>View candidate by specific division
+Summary of input, output and local variables
+-----------------------------------------------------------------------------------------------------
+| Variables								    | Description					                        |
+-----------------------------------------------------------------------------------------------------
+| local: found							    | boolean that is only true if the candidate file is    |
+|										    | found.                                                |
+-----------------------------------------------------------------------------------------------------
+| local and input : searchDivision		    | will prompt promptDivision function where user input  |
+|										    | can happened to view candidates in a desired division.|
+-----------------------------------------------------------------------------------------------------
+| output: printCandidatesDetails(candidate) | every candidates of a divivision is outputted.	    |
+-----------------------------------------------------------------------------------------------------
+| local: candidates						    | getting every candidate details.			            |
+-----------------------------------------------------------------------------------------------------
+*/
 void Voter::viewCandidatesDivision() {
 	bool found = false;
 	vector<Candidate> candidates = getCandidates();
@@ -371,7 +567,23 @@ void Voter::viewCandidatesDivision() {
 	}
 }
 
-//View candidate by specific party
+/*
+>>View candidate by specific party
+Summary of input, output and local variables
+-----------------------------------------------------------------------------------------------------
+| Variables								    | Description					                        |
+-----------------------------------------------------------------------------------------------------
+| local: found							    | boolean that is only true if the candidate file is    |
+|										    | found.                                                |
+-----------------------------------------------------------------------------------------------------
+| local and input: searchParty			    | allow user to input the party for the candidates they |
+|										    | want to view.											|
+-----------------------------------------------------------------------------------------------------
+| output: printCandidatesDetails(candidate) | every candidates of a divivision is outputted.	    |
+-----------------------------------------------------------------------------------------------------
+| local: candidates						    | getting every candidate details.			            |
+-----------------------------------------------------------------------------------------------------
+*/
 void Voter::viewCandidatesParty() {
 	string searchParty;
 	bool found = false;
@@ -393,15 +605,39 @@ void Voter::viewCandidatesParty() {
 		}
 	}
 
-
 	if (!found) {
 		cout << "No candidates available..." << endl << endl;
 	}
 }
 
-//Vote for candidates
+/*
+>>Vote for candidates
+Summary of input, output and local variables                          Test Data
+---------------------------------------------------------------------   ----------------------------------------------------------------------------------------------------
+| Variables					      | Description                     |   | Menu Choice | Name          | ID          | Age | Division  | Status | Description               |
+---------------------------------------------------------------------   ----------------------------------------------------------------------------------------------------
+| local: voters					  | get voters details.             |   |             | Boon Wen Chin | BoonWenChin | 87  | 1         | Y      | Display candidates in the |
+---------------------------------------------------------------------   |             |               |             |     |           |        | same division and vote.   |              |
+| local voterID                   | to verify the voterID inputted. |   -----------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------   
+| local and input: candidateID    | input candidate ID to vote and  |   
+|								  | to verify voter division and    |
+|								  | candidate division is the same. |
+---------------------------------------------------------------------   
+| local and input: confirm        | input Y or N to confirm voting  |  
+|								  | for the inputted candidate.	    |   
+---------------------------------------------------------------------
+| local: candidateExists          | boolean that is only true when  |
+|								  | the candidate ID is valid.	    |
+---------------------------------------------------------------------
+| local: candidates				  | getting every candidate details |
+|								  | from class.                     |
+---------------------------------------------------------------------
+| local: loop        			  | boolean that is only true when  |
+|                                 | candidateExists is false.       |
+---------------------------------------------------------------------
+*/
 void Voter::vote() {
-
 	cout << endl << "---------------------" << endl;
 	cout << "Vote For A Candidate" << endl;
 	cout << "---------------------" << endl;
@@ -486,7 +722,6 @@ void Voter::vote() {
 										cout << "Invalid selection, please try again." << endl;
 									}
 								}
-
 								candidateExists = true;
 								break;
 							}
@@ -513,7 +748,17 @@ void Voter::vote() {
 	}
 }
 
-//Increases the vote count for the candidate and the voters voting status in their respective text files
+/*
+>>Increases the vote count for the candidate and the voters voting status in their respective text files
+Summary of input, output and local variables
+-----------------------------------------------------------------------------------------------------
+| Variables								    | Description					                        |
+-----------------------------------------------------------------------------------------------------
+| local: voters							    | getting every voters details.						    |
+-----------------------------------------------------------------------------------------------------
+| local: candidates						    | getting every candidate details.			            |
+-----------------------------------------------------------------------------------------------------
+*/
 void Voter::updateDatabase(Candidate candidate, Voter voter) {
 	vector<Candidate> candidates = getCandidates();
 	vector<Voter> voters = getVoters();
@@ -536,7 +781,7 @@ void Voter::updateDatabase(Candidate candidate, Voter voter) {
 		for (Candidate c : candidates) {
 			outputStream << c.getCandidateId() + "," + c.getName() + "," << c.getParty() + "," + to_string(c.getDivision()) + "," + to_string(c.getVotes()) << endl;
 		}
-		
+
 	}
 	else{
 		cout << "Error: The candidate text file could not be opened." << endl;
@@ -568,7 +813,17 @@ void Voter::updateDatabase(Candidate candidate, Voter voter) {
 	outputStream.close();
 }
 
-//Verifies that the voter ID given is valid and returns the voter ID
+/*
+>>Verifies that the voter ID given is valid and returns the voter ID
+Summary of input, output and local variables
+-----------------------------------------------------------------------------------------------------
+| Variables								    | Description					                        |
+-----------------------------------------------------------------------------------------------------
+| local & input: id  					    | input the voter ID to verify the ID is valid.		    |
+-----------------------------------------------------------------------------------------------------
+| local: idExists   					    | boolean that is only true when the voter ID is verify.|
+-----------------------------------------------------------------------------------------------------
+*/
 string Voter::verifyVoter() {
 	string id;
 	Voter myVoter;
@@ -603,7 +858,21 @@ string Voter::verifyVoter() {
 	}
 }
 
-//Get the voters details from the voter text file
+/*
+>>Get the voters details from the voter text file
+Summary of input, output and local variables
+---------------------------------------------------------------------------
+| Variables					      | Description                           |
+---------------------------------------------------------------------------
+| local: fileline				  | a text string to output the text file |
+---------------------------------------------------------------------------
+| local: voterDetails             | vector to get voters details from the |
+|								  | the file.                             |
+---------------------------------------------------------------------------
+| local: voters                   | vector to get voters details from the |
+|								  | class.					    	      |
+---------------------------------------------------------------------------
+*/
 vector<Voter> Voter::getVoters() {
 	ifstream inputStream;
 	string fileLine = "";
@@ -638,9 +907,30 @@ vector<Voter> Voter::getVoters() {
 	return voters;
 }
 
-//This function is the menu options for the register voters 
+/*
+>>This function is the menu options for the register voters
+Summary of input, output and local variables                          Test Data
+--------------------------------------------------------------------   --------------------------------------------------------------------------------------------------
+| Variables					      | Description                    |   | Menu Choice | Name         | ID         | Age  | Division  | Status | Description              |
+--------------------------------------------------------------------   --------------------------------------------------------------------------------------------------
+| local & input: choice		      | prompt promptVoterName and     |   | 2           | Amy Xu       | AmyXu      | 20   | 4         | N      | Registration done by     |
+|								  | user can input name.           |   |             |              |            |      |           |        | filling details.         |   
+--------------------------------------------------------------------   --------------------------------------------------------------------------------------------------
+| local: voterID                  | to generate voter ID.	       | 
+--------------------------------------------------------------------
+| local & input: division         | prompt promptDivision and user |
+|								  | input division.  		       |
+--------------------------------------------------------------------
+| local & input: age              | prompt promptVoterAge and user |
+|                                 | input age.                     |
+--------------------------------------------------------------------
+| local: status                   | status is set to N for newly   |
+|                                 | registered voter.              |
+--------------------------------------------------------------------
+| output: inputToFile             | output voter details into file.|
+--------------------------------------------------------------------
+*/
 void Voter::registerVoter() {
-
 	string name,voterID;
 	int division, age;
 	char status;
@@ -673,12 +963,24 @@ void Voter::registerVoter() {
 	else {
 		cout << "Voter's name is already registered." << endl << endl;
 	}
-
 }
 
-//This function is for the user to input their name in the form of string
-string Voter::promptVoterName() 
-{
+/*
+>>This function is for the user to input their name in the form of string
+Summary of input, output and local variables
+----------------------------------------------------------------------------
+| Variables					      | Description                            |
+----------------------------------------------------------------------------
+| local & input: name			  | input where the user input their name. |
+----------------------------------------------------------------------------
+| local: valid                    | boolean where it is only true when the |
+|								  | input is alpha and space.              |
+----------------------------------------------------------------------------
+| local: letter                   | character where the input is verified  |
+|								  | as letter and space.			       |
+----------------------------------------------------------------------------
+*/
+string Voter::promptVoterName() {
 	string name;
 	bool valid = false;
 
@@ -702,7 +1004,24 @@ string Voter::promptVoterName()
 	return name;
 }
 
-//This function is for the user to input their age to check eligibilty for voting
+/*
+>>This function is for the user to input their age to check eligibilty for voting
+Summary of input, output and local variables
+-----------------------------------------------------------------------------
+| Variables					      | Description                             |
+-----------------------------------------------------------------------------
+| local: age		         	  | integer where the age is kept after     |
+|								  | transform from string.					|
+-----------------------------------------------------------------------------
+| local: valid                    | boolean where it is only true when the  |
+|								  | age in integer.			                |
+-----------------------------------------------------------------------------
+| output: age		              | output age that is integer form.        |
+-----------------------------------------------------------------------------
+| local & input: ageString        | input where user input their age as     |
+|								  | string.      			                |
+-----------------------------------------------------------------------------
+*/
 int Voter:: promptVoterAge() {
 	int age;
 	bool valid = false;
@@ -719,13 +1038,27 @@ int Voter:: promptVoterAge() {
 		catch (exception e) {
 			cout << "Invalid input...Please try again" << endl;
 		}
-
-		
 	}
 	return age;
 }
 
-//This function is for the user to input their division in the form of string
+/*
+>>This function is for the user to input their division in the form of string
+Summary of input, output and local variables
+------------------------------------------------------------------------------------
+| Variables					      | Description                                    |
+------------------------------------------------------------------------------------
+| local: division		          | integer where the division is kept after	   |
+|								  | transform from string.						   |
+------------------------------------------------------------------------------------
+| local: valid                    | boolean where it is only true when the         |
+|								  | division in integer and only input of 1  to 4. |
+------------------------------------------------------------------------------------
+| input: divisionString		      | user input their division as string form.      |
+------------------------------------------------------------------------------------
+| output: division				  | division is outputted in the form of integer.  |
+------------------------------------------------------------------------------------
+*/
 int Voter:: promptDivision() {
 	int division;
 	bool valid = false;
@@ -746,14 +1079,13 @@ int Voter:: promptDivision() {
 	return division;
 }
 
-
 //This function generate the voter ID
 string Voter:: generateVoterID(string name) {
 	name.erase(remove(name.begin(), name.end(), ' '), name.end());
 	return name;
 }
 
-//This function is to convert the candidates information into .txt file storing into database
+//This function is to convert the candidates information into.txt file storing into database
 void Voter::inputToFile(string& voterID, string& name, char& status, int& division, int& age) {
 	string outputFilename = "voter.txt";
 	string voterDetails = voterID + "," + name + "," + to_string(age) + "," + to_string(division) + "," + status;
@@ -770,14 +1102,26 @@ void Voter::inputToFile(string& voterID, string& name, char& status, int& divisi
 	outputStream.close();
 }
 
-//This function is to check if the voter's name is already exists in the database
+/*
+>>This function is to check if the voter's name is already exists in the database
+Summary of input, output and local variables
+---------------------------------------------------------------------------------------
+| Variables					      | Description                                       |
+---------------------------------------------------------------------------------------
+| local: voters  		          | getting voters details from class.			      |
+---------------------------------------------------------------------------------------
+| local: voterName                | get voter name to verify whether the name exists. |
+---------------------------------------------------------------------------------------
+| local & output: nameExits		  | boolean where it is only true is the voter name   |
+|								  | does not exist and output it.					  |
+---------------------------------------------------------------------------------------
+*/
 bool Voter::validateVoterName(string name) {
 	vector<Voter> voters = getVoters();
 
 	bool nameExists = false;
 	transform(name.begin(), name.end(), name.begin(), ::tolower);
 	
-
 	for (Voter voter:voters) {
 		string voterName = voter.getName();
 		transform(voterName.begin(), voterName.end(), voterName.begin(), ::tolower);
@@ -788,9 +1132,7 @@ bool Voter::validateVoterName(string name) {
 	}
 
 	return nameExists;
-	
 }
-
 
 //This function prints out the description when program quit	
 void Voter::quit() {

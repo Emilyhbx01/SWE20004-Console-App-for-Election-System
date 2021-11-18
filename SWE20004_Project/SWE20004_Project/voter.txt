@@ -4,3 +4,8 @@ VoonBoonLok,Voon Boon Lok,56,2,Y
 TongChinYong,Tong Chin Yong,67,2,Y
 BoonWenChin,Boon Wen Chin,87,1,Y
 AdamWong,Adam Wong,30,2,Y
+WalterLee,Walter Lee,34,2,N
+AmyXu,Amy Xu,20,4,N
+BrendaWong,Brenda Wong,45,1,N
+LinYong,Lin Yong,34,2,Y
+FanYingLi,Fan Ying Li,23,3,N

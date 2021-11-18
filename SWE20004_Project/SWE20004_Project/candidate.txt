@@ -7,7 +7,7 @@ All06,Ted Mosby,Alliance ,2,11
 All07,Barry Lee,Alliance,3,0
 All08,Selena Vema,Alliance,4,0
 Har09,Neil Boon,Harapan,1,2
-Har10,Fred Velma,Harapan,2,1
+Har10,Fred Velma,Harapan,2,2
 Har11,Crystal Xu,Harapan,3,4
 Har12,Daniel Fred,Harapan,4,0
 All13,Nathan Wong,Alliance,1,11
