@@ -139,14 +139,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="addcandidate.cpp" />
     <ClCompile Include="Candidate.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="votecandidate.cpp" />
     <ClCompile Include="Voter.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="addcandidate.h" />
     <ClInclude Include="Candidate.h" />
     <ClInclude Include="votecandidate.h" />
     <ClInclude Include="Voter.h" />

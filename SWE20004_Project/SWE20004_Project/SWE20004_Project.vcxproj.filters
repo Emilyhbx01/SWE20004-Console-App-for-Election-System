@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="addcandidate.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -32,9 +29,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="addcandidate.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="votecandidate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
