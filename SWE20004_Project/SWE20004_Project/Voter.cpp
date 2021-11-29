@@ -328,13 +328,6 @@ void Voter::viewAllVoteResult() {
 		int candidateVote = candidate.getVotes();
 		cout << candidate.getCandidateId() << "\t" << candidate.getName() << "\t" << candidateVote << "\t" << endl;
 		totalVotes += candidateVote;
-
-		if (candidateVote < minVote) {
-			minVote = candidateVote;
-		}
-		if (candidateVote > maxVote) {
-			maxVote = candidateVote;
-		}
 	}
 	summariseAllVoteResult(totalVotes);
 }

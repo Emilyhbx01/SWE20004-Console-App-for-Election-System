@@ -45,3 +45,28 @@ int main() {
 	return 0;
 }
 
+
+////Main function of the program
+//int main() {
+//	bool run = true;
+//
+//	while (run) {
+//		displayAddCandidateMenu();
+//		string add_choice = promptChoice();
+//		if (add_choice == "1") {
+//			addCandidate(); //adding candidate function
+//		}
+//		else if (add_choice == "2") {
+//			viewCandidate(); //viewing candidate function
+//		}
+//		else if (add_choice == "3") {
+//			searchCandidate(); //search candidate function
+//		}
+//		else if (add_choice == "4") {
+//			exitProgram();//quit the program
+//			run = false;
+//			return 1;
+//		}
+//	}
+//	return 0;
+//}

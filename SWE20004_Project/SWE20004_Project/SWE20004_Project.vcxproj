@@ -145,6 +145,7 @@
     <ClCompile Include="Voter.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="addcandidate.h" />
     <ClInclude Include="Candidate.h" />
     <ClInclude Include="votecandidate.h" />
     <ClInclude Include="Voter.h" />
