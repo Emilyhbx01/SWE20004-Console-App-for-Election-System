@@ -11,3 +11,5 @@ Har10,Fred Velma,Harapan,2,2
 Har11,Crystal Xu,Harapan,3,4
 Har12,Daniel Fred,Harapan,4,0
 All13,Nathan Wong,Alliance,1,11
+Har14,Ting Seng,Harapan,1,1
+Har15,Wendy Ting,Harapan,1,0

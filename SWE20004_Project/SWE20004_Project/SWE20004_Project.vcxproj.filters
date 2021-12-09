@@ -27,6 +27,9 @@
     <ClCompile Include="Voter.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="addcandidate.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="votecandidate.h">
